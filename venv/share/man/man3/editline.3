@@ -1,354 +1,419 @@
-.\"	$NetBSD: editline.3,v 1.101 2021/08/15 10:12:54 wiz Exp $
-.\"
-.\" Copyright (c) 1997-2014 The NetBSD Foundation, Inc.
-.\" All rights reserved.
-.\"
-.\" This file was contributed to The NetBSD Foundation by Luke Mewburn.
-.\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
-.\"
-.\" THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
-.\" ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-.\" TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-.\" PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
-.\" BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-.\" CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-.\" SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-.\" INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-.\" CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-.\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-.\" POSSIBILITY OF SUCH DAMAGE.
-.\"
-.Dd August 15, 2021
-.Dt EDITLINE 3
-.Os
-.Sh NAME
-.Nm editline ,
-.Nm el_init ,
-.Nm el_init_fd ,
-.Nm el_end ,
-.Nm el_reset ,
-.Nm el_gets ,
-.Nm el_wgets ,
-.Nm el_getc ,
-.Nm el_wgetc ,
-.Nm el_push ,
-.Nm el_wpush ,
-.Nm el_parse ,
-.Nm el_wparse ,
-.Nm el_set ,
-.Nm el_wset ,
-.Nm el_get ,
-.Nm el_wget ,
-.Nm el_source ,
-.Nm el_resize ,
-.Nm el_cursor ,
-.Nm el_line ,
-.Nm el_wline ,
-.Nm el_insertstr ,
-.Nm el_winsertstr ,
-.Nm el_deletestr ,
-.Nm el_wdeletestr ,
-.Nm history_init ,
-.Nm history_winit ,
-.Nm history_end ,
-.Nm history_wend ,
-.Nm history ,
-.Nm history_w ,
-.Nm tok_init ,
-.Nm tok_winit ,
-.Nm tok_end ,
-.Nm tok_wend ,
-.Nm tok_reset ,
-.Nm tok_wreset ,
-.Nm tok_line ,
-.Nm tok_wline ,
-.Nm tok_str ,
-.Nm tok_wstr
-.Nd line editor, history and tokenization functions
-.Sh LIBRARY
-.Lb libedit
-.Sh SYNOPSIS
-.In histedit.h
-.Ft EditLine *
-.Fn el_init "const char *prog" "FILE *fin" "FILE *fout" "FILE *ferr"
-.Ft EditLine *
-.Fn el_init_fd "const char *prog" "FILE *fin" "FILE *fout" "FILE *ferr" "int fdin" "int fdout" "int fderr"
-.Ft void
-.Fn el_end "EditLine *e"
-.Ft void
-.Fn el_reset "EditLine *e"
-.Ft const char *
-.Fn el_gets "EditLine *e" "int *count"
-.Ft const wchar_t *
-.Fn el_wgets "EditLine *e" "int *count"
-.Ft int
-.Fn el_getc "EditLine *e" "char *ch"
-.Ft int
-.Fn el_wgetc "EditLine *e" "wchar_t *wc"
-.Ft void
-.Fn el_push "EditLine *e" "const char *mbs"
-.Ft void
-.Fn el_wpush "EditLine *e" "const wchar_t *wcs"
-.Ft int
-.Fn el_parse "EditLine *e" "int argc" "const char *argv[]"
-.Ft int
-.Fn el_wparse "EditLine *e" "int argc" "const wchar_t *argv[]"
-.Ft int
-.Fn el_set "EditLine *e" "int op" "..."
-.Ft int
-.Fn el_wset "EditLine *e" "int op" "..."
-.Ft int
-.Fn el_get "EditLine *e" "int op" "..."
-.Ft int
-.Fn el_wget "EditLine *e" "int op" "..."
-.Ft int
-.Fn el_source "EditLine *e" "const char *file"
-.Ft void
-.Fn el_resize "EditLine *e"
-.Ft int
-.Fn el_cursor "EditLine *e" "int count"
-.Ft const LineInfo *
-.Fn el_line "EditLine *e"
-.Ft const LineInfoW *
-.Fn el_wline "EditLine *e"
-.Ft int
-.Fn el_insertstr "EditLine *e" "const char *str"
-.Ft int
-.Fn el_winsertstr "EditLine *e" "const wchar_t *str"
-.Ft void
-.Fn el_deletestr "EditLine *e" "int count"
-.Ft void
-.Fn el_wdeletestr "EditLine *e" "int count"
-.Ft History *
-.Fn history_init void
-.Ft HistoryW *
-.Fn history_winit void
-.Ft void
-.Fn history_end "History *h"
-.Ft void
-.Fn history_wend "HistoryW *h"
-.Ft int
-.Fn history "History *h" "HistEvent *ev" "int op" "..."
-.Ft int
-.Fn history_w "HistoryW *h" "HistEventW *ev" "int op" "..."
-.Ft Tokenizer *
-.Fn tok_init "const char *IFS"
-.Ft TokenizerW *
-.Fn tok_winit "const wchar_t *IFS"
-.Ft void
-.Fn tok_end "Tokenizer *t"
-.Ft void
-.Fn tok_wend "TokenizerW *t"
-.Ft void
-.Fn tok_reset "Tokenizer *t"
-.Ft void
-.Fn tok_wreset "TokenizerW *t"
-.Ft int
-.Fn tok_line "Tokenizer *t" "const LineInfo *li" "int *argc" "const char **argv[]" "int *cursorc" "int *cursoro"
-.Ft int
-.Fn tok_wline "TokenizerW *t" "const LineInfoW *li" "int *argc" "const wchar_t **argv[]" "int *cursorc" "int *cursoro"
-.Ft int
-.Fn tok_str "Tokenizer *t" "const char *str" "int *argc" "const char **argv[]"
-.Ft int
-.Fn tok_wstr "TokenizerW *t" "const wchar_t *str" "int *argc" "const wchar_t **argv[]"
-.Sh DESCRIPTION
+.TH EDITLINE 3 "August 15, 2021" ""
+.SH NAME
+\fBeditline\fP,
+\fBel_init\fP,
+\fBel_init_fd\fP,
+\fBel_end\fP,
+\fBel_reset\fP,
+\fBel_gets\fP,
+\fBel_wgets\fP,
+\fBel_getc\fP,
+\fBel_wgetc\fP,
+\fBel_push\fP,
+\fBel_wpush\fP,
+\fBel_parse\fP,
+\fBel_wparse\fP,
+\fBel_set\fP,
+\fBel_wset\fP,
+\fBel_get\fP,
+\fBel_wget\fP,
+\fBel_source\fP,
+\fBel_resize\fP,
+\fBel_cursor\fP,
+\fBel_line\fP,
+\fBel_wline\fP,
+\fBel_insertstr\fP,
+\fBel_winsertstr\fP,
+\fBel_deletestr\fP,
+\fBel_wdeletestr\fP,
+\fBhistory_init\fP,
+\fBhistory_winit\fP,
+\fBhistory_end\fP,
+\fBhistory_wend\fP,
+\fBhistory\fP,
+\fBhistory_w\fP,
+\fBtok_init\fP,
+\fBtok_winit\fP,
+\fBtok_end\fP,
+\fBtok_wend\fP,
+\fBtok_reset\fP,
+\fBtok_wreset\fP,
+\fBtok_line\fP,
+\fBtok_wline\fP,
+\fBtok_str\fP,
+\fBtok_wstr\fP
+\- line editor, history and tokenization functions
+.SH LIBRARY
+Command Line Editor Library (libedit, -ledit)
+.SH SYNOPSIS
+.PP
+\fB#include <histedit.h>\fP
+.PP
+\fIEditLine *\fP
+.br
+\fBel_init\fP(\fIconst char *prog\fP, \fIFILE *fin\fP, \fIFILE *fout\fP, \fIFILE *ferr\fP);
+.PP
+\fIEditLine *\fP
+.br
+\fBel_init_fd\fP(\fIconst char *prog\fP, \fIFILE *fin\fP, \fIFILE *fout\fP, \fIFILE *ferr\fP, \fIint fdin\fP, \fIint fdout\fP, \fIint fderr\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_end\fP(\fIEditLine *e\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_reset\fP(\fIEditLine *e\fP);
+.PP
+\fIconst char *\fP
+.br
+\fBel_gets\fP(\fIEditLine *e\fP, \fIint *count\fP);
+.PP
+\fIconst wchar_t *\fP
+.br
+\fBel_wgets\fP(\fIEditLine *e\fP, \fIint *count\fP);
+.PP
+\fIint\fP
+.br
+\fBel_getc\fP(\fIEditLine *e\fP, \fIchar *ch\fP);
+.PP
+\fIint\fP
+.br
+\fBel_wgetc\fP(\fIEditLine *e\fP, \fIwchar_t *wc\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_push\fP(\fIEditLine *e\fP, \fIconst char *mbs\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_wpush\fP(\fIEditLine *e\fP, \fIconst wchar_t *wcs\fP);
+.PP
+\fIint\fP
+.br
+\fBel_parse\fP(\fIEditLine *e\fP, \fIint argc\fP, \fIconst char *argv[]\fP);
+.PP
+\fIint\fP
+.br
+\fBel_wparse\fP(\fIEditLine *e\fP, \fIint argc\fP, \fIconst wchar_t *argv[]\fP);
+.PP
+\fIint\fP
+.br
+\fBel_set\fP(\fIEditLine *e\fP, \fIint op\fP, \fI...\fP);
+.PP
+\fIint\fP
+.br
+\fBel_wset\fP(\fIEditLine *e\fP, \fIint op\fP, \fI...\fP);
+.PP
+\fIint\fP
+.br
+\fBel_get\fP(\fIEditLine *e\fP, \fIint op\fP, \fI...\fP);
+.PP
+\fIint\fP
+.br
+\fBel_wget\fP(\fIEditLine *e\fP, \fIint op\fP, \fI...\fP);
+.PP
+\fIint\fP
+.br
+\fBel_source\fP(\fIEditLine *e\fP, \fIconst char *file\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_resize\fP(\fIEditLine *e\fP);
+.PP
+\fIint\fP
+.br
+\fBel_cursor\fP(\fIEditLine *e\fP, \fIint count\fP);
+.PP
+\fIconst LineInfo *\fP
+.br
+\fBel_line\fP(\fIEditLine *e\fP);
+.PP
+\fIconst LineInfoW *\fP
+.br
+\fBel_wline\fP(\fIEditLine *e\fP);
+.PP
+\fIint\fP
+.br
+\fBel_insertstr\fP(\fIEditLine *e\fP, \fIconst char *str\fP);
+.PP
+\fIint\fP
+.br
+\fBel_winsertstr\fP(\fIEditLine *e\fP, \fIconst wchar_t *str\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_deletestr\fP(\fIEditLine *e\fP, \fIint count\fP);
+.PP
+\fIvoid\fP
+.br
+\fBel_wdeletestr\fP(\fIEditLine *e\fP, \fIint count\fP);
+.PP
+\fIHistory *\fP
+.br
+\fBhistory_init\fP(void );
+.PP
+\fIHistoryW *\fP
+.br
+\fBhistory_winit\fP(void );
+.PP
+\fIvoid\fP
+.br
+\fBhistory_end\fP(\fIHistory *h\fP);
+.PP
+\fIvoid\fP
+.br
+\fBhistory_wend\fP(\fIHistoryW *h\fP);
+.PP
+\fIint\fP
+.br
+\fBhistory\fP(\fIHistory *h\fP, \fIHistEvent *ev\fP, \fIint op\fP, \fI...\fP);
+.PP
+\fIint\fP
+.br
+\fBhistory_w\fP(\fIHistoryW *h\fP, \fIHistEventW *ev\fP, \fIint op\fP, \fI...\fP);
+.PP
+\fITokenizer *\fP
+.br
+\fBtok_init\fP(\fIconst char *IFS\fP);
+.PP
+\fITokenizerW *\fP
+.br
+\fBtok_winit\fP(\fIconst wchar_t *IFS\fP);
+.PP
+\fIvoid\fP
+.br
+\fBtok_end\fP(\fITokenizer *t\fP);
+.PP
+\fIvoid\fP
+.br
+\fBtok_wend\fP(\fITokenizerW *t\fP);
+.PP
+\fIvoid\fP
+.br
+\fBtok_reset\fP(\fITokenizer *t\fP);
+.PP
+\fIvoid\fP
+.br
+\fBtok_wreset\fP(\fITokenizerW *t\fP);
+.PP
+\fIint\fP
+.br
+\fBtok_line\fP(\fITokenizer *t\fP, \fIconst LineInfo *li\fP, \fIint *argc\fP, \fIconst char **argv[]\fP, \fIint *cursorc\fP, \fIint *cursoro\fP);
+.PP
+\fIint\fP
+.br
+\fBtok_wline\fP(\fITokenizerW *t\fP, \fIconst LineInfoW *li\fP, \fIint *argc\fP, \fIconst wchar_t **argv[]\fP, \fIint *cursorc\fP, \fIint *cursoro\fP);
+.PP
+\fIint\fP
+.br
+\fBtok_str\fP(\fITokenizer *t\fP, \fIconst char *str\fP, \fIint *argc\fP, \fIconst char **argv[]\fP);
+.PP
+\fIint\fP
+.br
+\fBtok_wstr\fP(\fITokenizerW *t\fP, \fIconst wchar_t *str\fP, \fIint *argc\fP, \fIconst wchar_t **argv[]\fP);
+.SH DESCRIPTION
 The
-.Nm
+\fBeditline\fP
 library provides generic line editing, history and tokenization functions,
 similar to those found in
-.Xr sh 1 .
-.Pp
+\fBsh\fP(1).
+
 These functions are available in the
-.Nm libedit
+\fBlibedit\fP
 library (which needs the
-.Nm libtermcap
+\fBlibtermcap\fP
 library).
 Programs should be linked with
-.Fl ledit ltermcap .
-.Pp
+\fB\-ledit\fP ltermcap .
+
 The
-.Nm
+\fBeditline\fP
 library respects the
-.Ev LC_CTYPE
+.IR LC_CTYPE
 locale set by the application program and never uses
-.Xr setlocale 3
+\fBsetlocale\fP(3)
 to change the locale.
-.Sh LINE EDITING FUNCTIONS
+.SH LINE EDITING FUNCTIONS
 The line editing functions use a common data structure,
-.Fa EditLine ,
+\fIEditLine\fP,
 which is created by
-.Fn el_init
+\fBel_init\fP()
 or
-.Fn el_init_fd
+\fBel_init_fd\fP()
 and freed by
-.Fn el_end .
-.Pp
+\fBel_end\fP().
+
 The wide-character functions behave the same way as their narrow
 counterparts.
-.Pp
+
 The following functions are available:
-.Bl -tag -width 4n
-.It Fn el_init
+.TP
+\fBel_init\fP()
 Initialize the line editor, and return a data structure
 to be used by all other line editing functions, or
-.Dv NULL
+NULL
 on failure.
-.Fa prog
+\fIprog \fP
 is the name of the invoking program, used when reading the
-.Xr editrc 5
+\fBeditrc\fP(5)
 file to determine which settings to use.
-.Fa fin ,
-.Fa fout
+\fIfin\fP,
+\fIfout \fP
 and
-.Fa ferr
+\fIferr \fP
 are the input, output, and error streams (respectively) to use.
 In this documentation, references to
-.Dq the tty
+``the tty''
 are actually to this input/output stream combination.
-.It Fn el_init_fd
+.TP
+\fBel_init_fd\fP()
 Like
-.Fn el_init
+\fBel_init\fP()
 but allows specifying file descriptors for the
-.Xr stdio 3
+\fBstdio\fP(3)
 corresponding streams, in case those were created with
-.Xr funopen 3 .
-.It Fn el_end
+\fBfunopen\fP(3).
+.TP
+\fBel_end\fP()
 Clean up and finish with
-.Fa e ,
+\fIe\fP,
 assumed to have been created with
-.Fn el_init
+\fBel_init\fP()
 or
-.Fn el_init_fd .
-.It Fn el_reset
+\fBel_init_fd\fP().
+.TP
+\fBel_reset\fP()
 Reset the tty and the parser.
 This should be called after an error which may have upset the tty's
 state.
-.It Fn el_gets
+.TP
+\fBel_gets\fP()
 Read a line from the tty.
-.Fa count
+\fIcount \fP
 is modified to contain the number of characters read.
 Returns the line read if successful, or
-.Dv NULL
+NULL
 if no characters were read or if an error occurred.
 If an error occurred,
-.Fa count
+\fIcount \fP
 is set to \-1 and
-.Dv errno
+errno
 contains the error code that caused it.
 The return value may not remain valid across calls to
-.Fn el_gets
+\fBel_gets\fP()
 and must be copied if the data is to be retained.
-.It Fn el_wgetc
+.TP
+\fBel_wgetc\fP()
 Read a wide character from the tty, respecting the current locale,
 or from the input queue described in
-.Xr editline 7
+\fBeditline\fP(7)
 if that is not empty, and store it in
-.Fa wc .
+\fIwc\fP.
 If an invalid or incomplete character is found, it is discarded,
-.Va errno
+\fIerrno\fP
 is set to
-.Er EILSEQ ,
+Er EILSEQ ,
 and the next character is read and stored in
-.Fa wc .
+\fIwc\fP.
 Returns 1 if a valid character was read, 0 on end of file, or \-1 on
-.Xr read 2
+\fBread\fP(2)
 failure.
 In the latter case,
-.Va errno
+\fIerrno\fP
 is set to indicate the error.
-.It Fn el_getc
+.TP
+\fBel_getc\fP()
 Read a wide character as described for
-.Fn el_wgetc
+\fBel_wgetc\fP()
 and return 0 on end of file or \-1 on failure.
 If the wide character can be represented as a single-byte character,
 convert it with
-.Xr wctob 3 ,
+\fBwctob\fP(3),
 store the result in
-.Fa ch ,
+\fIch\fP,
 and return 1; otherwise, set
-.Va errno
+\fIerrno\fP
 to
-.Er ERANGE
+Er ERANGE
 and return \-1.
 In the C or POSIX locale, this simply reads a byte, but for any other
 locale, including UTF-8, this is rarely useful.
-.It Fn el_wpush
+.TP
+\fBel_wpush\fP()
 Push the wide character string
-.Fa wcs
+\fIwcs \fP
 back onto the input queue described in
-.Xr editline 7 .
+\fBeditline\fP(7).
 If the queue overflows, for example due to a recursive macro,
 or if an error occurs, for example because
-.Fa wcs
+\fIwcs \fP
 is
-.Dv NULL
+NULL
 or memory allocation fails, the function beeps at the user,
 but does not report the problem to the caller.
-.It Fn el_push
+.TP
+\fBel_push\fP()
 Use the current locale to convert the multibyte string
-.Fa mbs
+\fImbs \fP
 to a wide character string, and pass the result to
-.Fn el_wpush .
-.It Fn el_parse
+\fBel_wpush\fP().
+.TP
+\fBel_parse\fP()
 Parses the
-.Fa argv
+\fIargv \fP
 array (which is
-.Fa argc
+\fIargc \fP
 elements in size)
 to execute builtin
-.Nm
+\fBeditline\fP
 commands.
 If the command is prefixed with
-.Dq prog :
+``prog :''
 then
-.Fn el_parse
+\fBel_parse\fP()
 will only execute the command if
-.Dq prog
+``prog''
 matches the
-.Fa prog
+\fIprog \fP
 argument supplied to
-.Fn el_init .
+\fBel_init\fP().
 The return value is
 \-1 if the command is unknown,
 0 if there was no error or
-.Dq prog
+``prog''
 didn't match, or
 1 if the command returned an error.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for more information.
-.It Fn el_set
+.TP
+\fBel_set\fP()
 Set
-.Nm
+\fBeditline\fP
 parameters.
-.Fa op
+\fIop \fP
 determines which parameter to set, and each operation has its
 own parameter list.
 Returns 0 on success, \-1 on failure.
-.Pp
+
 The following values for
-.Fa op
+\fIop \fP
 are supported, along with the required argument list:
-.Bl -tag -width 4n
-.It Dv EL_PROMPT , Fa "char *(*f)(EditLine *)"
+.RS
+.TP
+EL_PROMPT , \fIchar *(*f)(EditLine *)\fP
 Define prompt printing function as
-.Fa f ,
+\fIf\fP,
 which is to return a string that contains the prompt.
-.It Dv EL_PROMPT_ESC , Fa "char *(*f)(EditLine *)" , Fa "char c"
+.TP
+EL_PROMPT_ESC , \fIchar *(*f)(EditLine *), Fa char c\fP
 Same as
-.Dv EL_PROMPT ,
+EL_PROMPT ,
 but the
-.Fa c
+\fIc \fP
 argument indicates the start/stop literal prompt character.
-.Pp
+
 If a start/stop literal character is found in the prompt, the
 character itself
 is not printed, but characters after it are printed directly to the
@@ -358,588 +423,674 @@ This is typically used to embed literal escape sequences that change the
 color/style of the terminal in the prompt.
 Note that the literal escape character cannot be the last character in the
 prompt, as the escape sequence is attached to the next character in the prompt.
-.Dv 0
+0
 unsets it.
-.It Dv EL_REFRESH
+.TP
+EL_REFRESH
 Re-display the current line on the next terminal line.
-.It Dv EL_RPROMPT , Fa "char *(*f)(EditLine *)"
+.TP
+EL_RPROMPT , \fIchar *(*f)(EditLine *)\fP
 Define right side prompt printing function as
-.Fa f ,
+\fIf\fP,
 which is to return a string that contains the prompt.
-.It Dv EL_RPROMPT_ESC , Fa "char *(*f)(EditLine *)" , Fa "char c"
+.TP
+EL_RPROMPT_ESC , \fIchar *(*f)(EditLine *), Fa char c\fP
 Define the right prompt printing function but with a literal escape character.
-.It Dv EL_TERMINAL , Fa "const char *type"
+.TP
+EL_TERMINAL , \fIconst char *type\fP
 Define terminal type of the tty to be
-.Fa type ,
+\fItype\fP,
 or to
-.Ev TERM
+.IR TERM
 if
-.Fa type
+\fItype \fP
 is
-.Dv NULL .
-.It Dv EL_EDITOR , Fa "const char *mode"
+NULL .
+.TP
+EL_EDITOR , \fIconst char *mode\fP
 Set editing mode to
-.Fa mode ,
+\fImode\fP,
 which must be one of
-.Dq emacs
+``emacs''
 or
-.Dq vi .
-.It Dv EL_SIGNAL , Fa "int flag"
+``vi''.
+.TP
+EL_SIGNAL , \fIint flag\fP
 If
-.Fa flag
+\fIflag \fP
 is non-zero,
-.Nm
+\fBeditline\fP
 will install its own signal handler for the following signals when
 reading command input:
-.Dv SIGCONT ,
-.Dv SIGHUP ,
-.Dv SIGINT ,
-.Dv SIGQUIT ,
-.Dv SIGSTOP ,
-.Dv SIGTERM ,
-.Dv SIGTSTP ,
+SIGCONT ,
+SIGHUP ,
+SIGINT ,
+SIGQUIT ,
+SIGSTOP ,
+SIGTERM ,
+SIGTSTP ,
 and
-.Dv SIGWINCH .
+SIGWINCH .
 Otherwise, the current signal handlers will be used.
-.It Dv EL_BIND , Fa "const char *" , Fa "..." , Dv NULL
+.TP
+EL_BIND , \fIconst char *, Fa ..., Dv NULL \fP
 Perform the
-.Ic bind
+\fBbind\fP
 builtin command.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for more information.
-.It Dv EL_ECHOTC , Fa "const char *" , Fa "..." , Dv NULL
+.TP
+EL_ECHOTC , \fIconst char *, Fa ..., Dv NULL \fP
 Perform the
-.Ic echotc
+\fBechotc\fP
 builtin command.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for more information.
-.It Dv EL_SETTC , Fa "const char *" , Fa "..." , Dv NULL
+.TP
+EL_SETTC , \fIconst char *, Fa ..., Dv NULL \fP
 Perform the
-.Ic settc
+\fBsettc\fP
 builtin command.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for more information.
-.It Dv EL_SETTY , Fa "const char *" , Fa "..." , Dv NULL
+.TP
+EL_SETTY , \fIconst char *, Fa ..., Dv NULL \fP
 Perform the
-.Ic setty
+\fBsetty\fP
 builtin command.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for more information.
-.It Dv EL_TELLTC , Fa "const char *" , Fa "..." , Dv NULL
+.TP
+EL_TELLTC , \fIconst char *, Fa ..., Dv NULL \fP
 Perform the
-.Ic telltc
+\fBtelltc\fP
 builtin command.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for more information.
-.It Dv EL_ADDFN , Fa "const char *name" , Fa "const char *help" , \
+.TP
+EL_ADDFN , \fIconst char *name, Fa const char *help, \ \fP
 Fa "unsigned char (*func)(EditLine *e, int ch)"
 Add a user defined function,
-.Fn func ,
+\fBfunc\fP(),
 referred to as
-.Fa name
+\fIname \fP
 which is invoked when a key which is bound to
-.Fa name
+\fIname \fP
 is entered.
-.Fa help
+\fIhelp \fP
 is a description of
-.Fa name .
+\fIname\fP.
 At invocation time,
-.Fa ch
+\fIch \fP
 is the key which caused the invocation.
 The return value of
-.Fn func
+\fBfunc\fP()
 should be one of:
-.Bl -tag -width "CC_REDISPLAY"
-.It Dv CC_NORM
+.RS
+.TP
+CC_NORM
 Add a normal character.
-.It Dv CC_NEWLINE
+.TP
+CC_NEWLINE
 End of line was entered.
-.It Dv CC_EOF
+.TP
+CC_EOF
 EOF was entered.
-.It Dv CC_ARGHACK
+.TP
+CC_ARGHACK
 Expecting further command input as arguments, do nothing visually.
-.It Dv CC_REFRESH
+.TP
+CC_REFRESH
 Refresh display.
-.It Dv CC_REFRESH_BEEP
+.TP
+CC_REFRESH_BEEP
 Refresh display, and beep.
-.It Dv CC_CURSOR
+.TP
+CC_CURSOR
 Cursor moved, so update and perform
-.Dv CC_REFRESH .
-.It Dv CC_REDISPLAY
+CC_REFRESH .
+.TP
+CC_REDISPLAY
 Redisplay entire input line.
 This is useful if a key binding outputs extra information.
-.It Dv CC_ERROR
+.TP
+CC_ERROR
 An error occurred.
 Beep, and flush tty.
-.It Dv CC_FATAL
+.TP
+CC_FATAL
 Fatal error, reset tty to known state.
-.El
-.It Dv EL_HIST , Fa "History *(*func)(History *, int op, ...)" , \
+.RE
+.TP
+EL_HIST , \fIHistory *(*func)(History *, int op, ...), \ \fP
 Fa "const char *ptr"
 Defines which history function to use, which is usually
-.Fn history .
-.Fa ptr
+\fBhistory\fP().
+\fIptr \fP
 should be the value returned by
-.Fn history_init .
-.It Dv EL_EDITMODE , Fa "int flag"
+\fBhistory_init\fP().
+.TP
+EL_EDITMODE , \fIint flag\fP
 If
-.Fa flag
+\fIflag \fP
 is non-zero,
 editing is enabled (the default).
 Note that this is only an indication, and does not
 affect the operation of
-.Nm .
+\fB.\fP
 At this time, it is the caller's responsibility to
 check this
 (using
-.Fn el_get )
+\fBel_get\fP() )
 to determine if editing should be enabled or not.
-.It Dv EL_UNBUFFERED , Fa "int flag"
+.TP
+EL_UNBUFFERED , \fIint flag\fP
 If
-.Fa flag
+\fIflag \fP
 is zero,
 unbuffered mode is disabled (the default).
 In unbuffered mode,
-.Fn el_gets
+\fBel_gets\fP()
 will return immediately after processing a single character.
-.It Dv EL_SAFEREAD , Fa "int flag"
+.TP
+EL_SAFEREAD , \fIint flag\fP
 If the
-.Fa flag
+\fIflag \fP
 argument is non-zero, then
-.Nm editline
-attempts to recover from read errors, ignoring the first interrrupted
+\fBeditline\fP
+attempts to recover from read errors, ignoring the first interrupted
 error, and trying to reset the input file descriptor to reset non-blocking I/O.
 This is disabled by default, and desirable only when
-.Nm editline
+\fBeditline\fP
 is used in shell-like applications.
-.It Dv EL_GETCFN , Fa "el_rfunc_t f"
+.TP
+EL_GETCFN , \fIel_rfunc_t f\fP
 Whenever reading a character, use the function
-.Bd -ragged -offset indent -compact
-.Ft int
-.Fo f
-.Fa "EditLine *e"
-.Fa "wchar_t *wc"
-.Fc
-.Ed
+-ragged -offset indent -compact
+.PP
+\fIint\fP
+.br
+Fo f
+\fIEditLine *e\fP
+\fIwchar_t *wc\fP
+Fc
 which stores the character in
-.Fa wc
+\fIwc \fP
 and returns 1 on success, 0 on end of file, or \-1 on I/O or encoding
 errors.
 Functions internally using it include
-.Fn el_wgets ,
-.Fn el_wgetc ,
-.Fn el_gets ,
+\fBel_wgets\fP(),
+\fBel_wgetc\fP(),
+\fBel_gets\fP(),
 and
-.Fn el_getc .
+\fBel_getc\fP().
 Initially, a builtin function is installed, and replacing it
 is discouraged because writing such a function is very error prone.
 The builtin function can be restored at any time by passing the
 special value
-.Dv EL_BUILTIN_GETCFN
+EL_BUILTIN_GETCFN
 instead of a function pointer.
-.It Dv EL_CLIENTDATA , Fa "void *data"
+.TP
+EL_CLIENTDATA , \fIvoid *data\fP
 Register
-.Fa data
+\fIdata \fP
 to be associated with this EditLine structure.
 It can be retrieved with the corresponding
-.Fn el_get
+\fBel_get\fP();
 call.
-.It Dv EL_SETFP , Fa "int fd" , Fa "FILE *fp"
+.TP
+EL_SETFP , \fIint fd, Fa FILE *fp\fP
 Set the current
-.Nm editline
+\fBeditline\fP
 file pointer for
-.Dq input
-.Fa fd
+``input''
+\fIfd \fP
 =
-.Dv 0 ,
-.Dq output
-.Fa fd
+0 ,
+``output''
+\fIfd \fP
 =
-.Dv 1 ,
+1 ,
 or
-.Dq error
-.Fa fd
+``error''
+\fIfd \fP
 =
-.Dv 2
+2
 from
-.Fa fp .
-.El
-.It Fn el_get
+\fIfp\fP.
+.RE
+.TP
+\fBel_get\fP()
 Get
-.Nm
+\fBeditline\fP
 parameters.
-.Fa op
+\fIop \fP
 determines which parameter to retrieve into
-.Fa result .
+\fIresult\fP.
 Returns 0 if successful, \-1 otherwise.
-.Pp
+
 The following values for
-.Fa op
+\fIop \fP
 are supported, along with actual type of
-.Fa result :
-.Bl -tag -width 4n
-.It Dv EL_PROMPT , Fa "char *(*f)(EditLine *)" , Fa "char *c"
+\fIresult : \fP
+.RS
+.TP
+EL_PROMPT , \fIchar *(*f)(EditLine *), Fa char *c\fP
 Set
-.Fa f
+\fIf \fP
 to a pointer to the function that displays the prompt.
 If
-.Fa c
+\fIc \fP
 is not
-.Dv NULL ,
+NULL ,
 set it to the start/stop literal prompt character.
-.It Dv EL_RPROMPT , Fa "char *(*f)(EditLine *)" , Fa "char *c"
+.TP
+EL_RPROMPT , \fIchar *(*f)(EditLine *), Fa char *c\fP
 Set
-.Fa f
+\fIf \fP
 to a pointer to the function that displays the prompt.
 If
-.Fa c
+\fIc \fP
 is not
-.Dv NULL ,
+NULL ,
 set it to the start/stop literal prompt character.
-.It Dv EL_EDITOR , Fa "const char **n"
+.TP
+EL_EDITOR , \fIconst char **n\fP
 Set the name of the editor in
-.Fa n ,
+\fIn\fP,
 which will be one of
-.Dq emacs
+``emacs''
 or
-.Dq vi .
-.It Dv EL_GETTC , Fa "const char *name" , Fa "void *value"
+``vi''.
+.TP
+EL_GETTC , \fIconst char *name, Fa void *value\fP
 If
-.Fa name
+\fIname \fP
 is a valid
-.Xr termcap 5
+\fBtermcap\fP(5)
 capability set
-.Fa value
+\fIvalue \fP
 to the current value of that capability.
-.It Dv EL_SIGNAL , Fa "int *s"
+.TP
+EL_SIGNAL , \fIint *s\fP
 Set
-.Fa s
+\fIs \fP
 to non-zero if
-.Nm
+\fBeditline\fP
 has installed private signal handlers (see
-.Fn el_get
+\fBel_get\fP()
 above).
-.It Dv EL_EDITMODE , Fa "int *c"
+.TP
+EL_EDITMODE , \fIint *c\fP
 Set
-.Fa c
+\fIc \fP
 to non-zero if editing is enabled.
-.It Dv EL_GETCFN , Fa "el_rfunc_t *f"
+.TP
+EL_GETCFN , \fIel_rfunc_t *f\fP
 Set
-.Fa f
+\fIf \fP
 to a pointer to the function that reads characters, or to
-.Dv EL_BUILTIN_GETCFN
+EL_BUILTIN_GETCFN
 if the builtin function is in use.
-.It Dv EL_CLIENTDATA , Fa "void **data"
+.TP
+EL_CLIENTDATA , \fIvoid **data\fP
 Set
-.Fa data
+\fIdata \fP
 to the previously registered client data set by an
-.Fn el_set
+\fBel_set\fP()
 call.
-.It Dv EL_UNBUFFERED , Fa "int *c"
+.TP
+EL_UNBUFFERED , \fIint *c\fP
 Set
-.Fa c
+\fIc \fP
 to non-zero if unbuffered mode is enabled.
-.It Dv EL_SAFEREAD , Fa "int *c"
+.TP
+EL_SAFEREAD , \fIint *c\fP
 Set
-.Fa c
+\fIc \fP
 to non-zero if safe read is set.
-.It Dv EL_GETFP , Fa "int fd", Fa "FILE **fp"
+.TP
+EL_GETFP , \fIint fd", Fa FILE **fp\fP
 Set
-.Fa fp
+\fIfp \fP
 to the current
-.Nm editline
+\fBeditline\fP
 file pointer for
-.Dq input
-.Fa fd
+``input''
+\fIfd \fP
 =
-.Dv 0 ,
-.Dq output
-.Fa fd
+0 ,
+``output''
+\fIfd \fP
 =
-.Dv 1 ,
+1 ,
 or
-.Dq error
-.Fa fd
+``error''
+\fIfd \fP
 =
-.Dv 2 .
-.El
-.It Fn el_source
+2 .
+.RE
+.TP
+\fBel_source\fP()
 Initialize
-.Nm
+\fBeditline\fP
 by reading the contents of
-.Fa file .
-.Fn el_parse
+\fIfile\fP.
+\fBel_parse\fP()
 is called for each line in
-.Fa file .
+\fIfile\fP.
 If
-.Fa file
+\fIfile \fP
 is
-.Dv NULL ,
+NULL ,
 try
-.Pa $EDITRC
+\fI$EDITRC\fP
 and if that is not set
-.Pa $HOME/.editrc .
+\fI$HOME/.editrc\fP.
 Refer to
-.Xr editrc 5
+\fBeditrc\fP(5)
 for details on the format of
-.Fa file .
-.Fn el_source
+\fIfile\fP.
+\fBel_source\fP()
 returns 0 on success and \-1 on error.
-.It Fn el_resize
+.TP
+\fBel_resize\fP()
 Must be called if the terminal size changes.
 If
-.Dv EL_SIGNAL
+EL_SIGNAL
 has been set with
-.Fn el_set ,
+\fBel_set\fP(),
 then this is done automatically.
 Otherwise, it's the responsibility of the application to call
-.Fn el_resize
+\fBel_resize\fP()
 on the appropriate occasions.
-.It Fn el_cursor
+.TP
+\fBel_cursor\fP()
 Move the cursor to the right (if positive) or to the left (if negative)
-.Fa count
+\fIcount \fP
 characters.
 Returns the resulting offset of the cursor from the beginning of the line.
-.It Fn el_line
+.TP
+\fBel_line\fP()
 Return the editing information for the current line in a
-.Fa LineInfo
+\fILineInfo \fP
 structure, which is defined as follows:
-.Bd -literal
+
 typedef struct lineinfo {
+.br
     const char *buffer;    /* address of buffer */
+.br
     const char *cursor;    /* address of cursor */
+.br
     const char *lastchar;  /* address of last character */
+.br
 } LineInfo;
-.Ed
-.Pp
-.Fa buffer
+.br
+
+\fIbuffer \fP
 is not NUL terminated.
 This function may be called after
-.Fn el_gets
+\fBel_gets\fP()
 to obtain the
-.Fa LineInfo
+\fILineInfo \fP
 structure pertaining to line returned by that function,
 and from within user defined functions added with
-.Dv EL_ADDFN .
-.It Fn el_insertstr
+EL_ADDFN .
+.TP
+\fBel_insertstr\fP()
 Insert
-.Fa str
+\fIstr \fP
 into the line at the cursor.
 Returns \-1 if
-.Fa str
+\fIstr \fP
 is empty or won't fit, and 0 otherwise.
-.It Fn el_deletestr
+.TP
+\fBel_deletestr\fP()
 Delete
-.Fa count
+\fIcount \fP
 characters before the cursor.
-.El
-.Sh HISTORY LIST FUNCTIONS
+.SH HISTORY LIST FUNCTIONS
 The history functions use a common data structure,
-.Fa History ,
+\fIHistory\fP,
 which is created by
-.Fn history_init
+\fBhistory_init\fP()
 and freed by
-.Fn history_end .
-.Pp
+\fBhistory_end\fP().
+
 The following functions are available:
-.Bl -tag -width 4n
-.It Fn history_init
+.TP
+\fBhistory_init\fP()
 Initialize the history list, and return a data structure
 to be used by all other history list functions, or
-.Dv NULL
+NULL
 on failure.
-.It Fn history_end
+.TP
+\fBhistory_end\fP()
 Clean up and finish with
-.Fa h ,
+\fIh\fP,
 assumed to have been created with
-.Fn history_init .
-.It Fn history
+\fBhistory_init\fP().
+.TP
+\fBhistory\fP()
 Perform operation
-.Fa op
+\fIop \fP
 on the history list, with optional arguments as needed by the
 operation.
-.Fa ev
+\fIev \fP
 is changed accordingly to operation.
 The following values for
-.Fa op
+\fIop \fP
 are supported, along with the required argument list:
-.Bl -tag -width 4n
-.It Dv H_SETSIZE , Fa "int size"
+.RS
+.TP
+H_SETSIZE , \fIint size\fP
 Set size of history to
-.Fa size
+\fIsize \fP
 elements.
-.It Dv H_GETSIZE
+.TP
+H_GETSIZE
 Get number of events currently in history.
-.It Dv H_END
+.TP
+H_END
 Cleans up and finishes with
-.Fa h ,
+\fIh\fP,
 assumed to be created with
-.Fn history_init .
-.It Dv H_CLEAR
+\fBhistory_init\fP().
+.TP
+H_CLEAR
 Clear the history.
-.It Dv H_FUNC , Fa "void *ptr" , Fa "history_gfun_t first" , \
+.TP
+H_FUNC , \fIvoid *ptr, Fa history_gfun_t first, \ \fP
 Fa "history_gfun_t next" , Fa "history_gfun_t last" , \
 Fa "history_gfun_t prev" , Fa "history_gfun_t curr" , \
 Fa "history_sfun_t set" , Fa "history_vfun_t clear" , \
 Fa "history_efun_t enter" , Fa "history_efun_t add"
 Define functions to perform various history operations.
-.Fa ptr
+\fIptr \fP
 is the argument given to a function when it's invoked.
-.It Dv H_FIRST
+.TP
+H_FIRST
 Return the first element in the history.
-.It Dv H_LAST
+.TP
+H_LAST
 Return the last element in the history.
-.It Dv H_PREV
+.TP
+H_PREV
 Return the previous element in the history.
 It is newer than the current one.
-.It Dv H_NEXT
+.TP
+H_NEXT
 Return the next element in the history.
 It is older than the current one.
-.It Dv H_CURR
+.TP
+H_CURR
 Return the current element in the history.
-.It Dv H_SET , Fa "int position"
+.TP
+H_SET , \fIint position\fP
 Set the cursor to point to the requested element.
-.It Dv H_ADD , Fa "const char *str"
+.TP
+H_ADD , \fIconst char *str\fP
 Append
-.Fa str
+\fIstr \fP
 to the current element of the history, or perform the
-.Dv H_ENTER
+H_ENTER
 operation with argument
-.Fa str
+\fIstr \fP
 if there is no current element.
-.It Dv H_APPEND , Fa "const char *str"
+.TP
+H_APPEND , \fIconst char *str\fP
 Append
-.Fa str
+\fIstr \fP
 to the last new element of the history.
-.It Dv H_ENTER , Fa "const char *str"
+.TP
+H_ENTER , \fIconst char *str\fP
 Add
-.Fa str
+\fIstr \fP
 as a new element to the history and, if necessary,
 removing the oldest entry to keep the list to the created size.
 If
-.Dv H_SETUNIQUE
+H_SETUNIQUE
 has been called with a non-zero argument, the element
 will not be entered into the history if its contents match
 the ones of the current history element.
 If the element is entered
-.Fn history
+\fBhistory\fP()
 returns 1; if it is ignored as a duplicate returns 0.
 Finally
-.Fn history
+\fBhistory\fP()
 returns \-1 if an error occurred.
-.It Dv H_PREV_STR , Fa "const char *str"
+.TP
+H_PREV_STR , \fIconst char *str\fP
 Return the closest previous event that starts with
-.Fa str .
-.It Dv H_NEXT_STR , Fa "const char *str"
+\fIstr\fP.
+.TP
+H_NEXT_STR , \fIconst char *str\fP
 Return the closest next event that starts with
-.Fa str .
-.It Dv H_PREV_EVENT , Fa "int e"
+\fIstr\fP.
+.TP
+H_PREV_EVENT , \fIint e\fP
 Return the previous event numbered
-.Fa e .
-.It Dv H_NEXT_EVENT , Fa "int e"
+\fIe\fP.
+.TP
+H_NEXT_EVENT , \fIint e\fP
 Return the next event numbered
-.Fa e .
-.It Dv H_LOAD , Fa "const char *file"
+\fIe\fP.
+.TP
+H_LOAD , \fIconst char *file\fP
 Load the history list stored in
-.Fa file .
-.It Dv H_SAVE , Fa "const char *file"
+\fIfile\fP.
+.TP
+H_SAVE , \fIconst char *file\fP
 Save the history list to
-.Fa file .
-.It Dv H_SAVE_FP , Fa "FILE *fp"
+\fIfile\fP.
+.TP
+H_SAVE_FP , \fIFILE *fp\fP
 Save the history list to the opened
-.Ft FILE
+.PP
+\fIFILE\fP
+.br
 pointer
-.Fa fp .
-.It Dv H_NSAVE_FP , Fa "size_t n" , Fa "FILE *fp"
+\fIfp\fP.
+.TP
+H_NSAVE_FP , \fIsize_t n, Fa FILE *fp\fP
 Save the last
-.Ft n
+.PP
+\fIn\fP
+.br
 history entries to the opened
-.Ft FILE
+.PP
+\fIFILE\fP
+.br
 pointer
-.Fa fp .
-.It Dv H_SETUNIQUE , Fa "int unique"
+\fIfp\fP.
+.TP
+H_SETUNIQUE , \fIint unique\fP
 Set flag that adjacent identical event strings should not be entered
 into the history.
-.It Dv H_GETUNIQUE
+.TP
+H_GETUNIQUE
 Retrieve the current setting if adjacent identical elements should
 be entered into the history.
-.It Dv H_DEL , Fa "int e"
+.TP
+H_DEL , \fIint e\fP
 Delete the event numbered
-.Fa e .
+\fIe\fP.
 This function is only provided for
-.Nm readline
+\fBreadline\fP
 compatibility.
 The caller is responsible for free'ing the string in the returned
-.Fa HistEvent .
-.El
-.Pp
-.Fn history
+\fIHistEvent\fP.
+.RE
+
+\fBhistory\fP();
 returns >= 0 if the operation
-.Fa op
+\fIop \fP
 succeeds.
 Otherwise, \-1 is returned and
-.Fa ev
+\fIev \fP
 is updated to contain more details about the error.
-.El
-.Sh TOKENIZATION FUNCTIONS
+.SH TOKENIZATION FUNCTIONS
 The tokenization functions use a common data structure,
-.Fa Tokenizer ,
+\fITokenizer\fP,
 which is created by
-.Fn tok_init
+\fBtok_init\fP()
 and freed by
-.Fn tok_end .
-.Pp
+\fBtok_end\fP().
+
 The following functions are available:
-.Bl -tag -width 4n
-.It Fn tok_init
+.TP
+\fBtok_init\fP()
 Initialize the tokenizer, and return a data structure
 to be used by all other tokenizer functions.
-.Fa IFS
+\fIIFS \fP
 contains the Input Field Separators, which defaults to
-.Aq space ,
-.Aq tab ,
+<space ,>
+<tab ,>
 and
-.Aq newline
+<newline>
 if
-.Dv NULL .
-.It Fn tok_end
+NULL .
+.TP
+\fBtok_end\fP()
 Clean up and finish with
-.Fa t ,
+\fIt\fP,
 assumed to have been created with
-.Fn tok_init .
-.It Fn tok_reset
+\fBtok_init\fP().
+.TP
+\fBtok_reset\fP()
 Reset the tokenizer state.
 Use after a line has been successfully tokenized
 by
-.Fn tok_line
+\fBtok_line\fP()
 or
-.Fn tok_str
+\fBtok_str\fP()
 and before a new line is to be tokenized.
-.It Fn tok_line
+.TP
+\fBtok_line\fP()
 Tokenize
-.Fa li ,
+\fIli\fP,
 If successful, modify:
-.Fa argv
+\fIargv \fP
 to contain the words,
-.Fa argc
+\fIargc \fP
 to contain the number of words,
-.Fa cursorc
+\fIcursorc \fP
 (if not
-.Dv NULL )
+NULL )
 to contain the index of the word containing the cursor,
 and
-.Fa cursoro
+\fIcursoro \fP
 (if not
-.Dv NULL )
+NULL )
 to contain the offset within
-.Fa argv[cursorc]
+\fIargv[cursorc] \fP
 of the cursor.
-.Pp
+
 Returns
 0 if successful,
 \-1 for an internal error,
@@ -947,74 +1098,75 @@ Returns
 2 for an unmatched double quote,
 and
 3 for a backslash quoted
-.Aq newline .
+<newline .>
 A positive exit code indicates that another line should be read
 and tokenization attempted again.
-.
-.It Fn tok_str
+.TP
+\fBtok_str\fP()
 A simpler form of
-.Fn tok_line ;
-.Fa str
+\fBtok_line\fP(; )
+\fIstr \fP
 is a NUL terminated string to tokenize.
-.El
-.
-.\"XXX.Sh EXAMPLES
-.\"XXX: provide some examples
-.Sh SEE ALSO
-.Xr sh 1 ,
-.Xr signal 3 ,
-.Xr termcap 3 ,
-.Xr editrc 5 ,
-.Xr termcap 5 ,
-.Xr editline 7
-.Sh HISTORY
+.SH SEE ALSO
+\fBsh\fP(1),
+\fBsignal\fP(3),
+\fBtermcap\fP(3),
+\fBeditrc\fP(5),
+\fBtermcap\fP(5),
+\fBeditline\fP(7)
+.SH HISTORY
 The
-.Nm
+\fBeditline\fP
 library first appeared in
-.Bx 4.4 .
-.Dv CC_REDISPLAY
+Bx 4.4 .
+CC_REDISPLAY
 appeared in
-.Nx 1.3 .
-.Dv CC_REFRESH_BEEP ,
-.Dv EL_EDITMODE
+Nx 1.3 .
+CC_REFRESH_BEEP ,
+EL_EDITMODE
 and the readline emulation appeared in
-.Nx 1.4 .
-.Dv EL_RPROMPT
+Nx 1.4 .
+EL_RPROMPT
 appeared in
-.Nx 1.5 .
-.Sh AUTHORS
-.An -nosplit
+Nx 1.5 .
+.SH AUTHORS
+
+-nosplit
 The
-.Nm
+\fBeditline\fP
 library was written by
-.An Christos Zoulas .
-.An Luke Mewburn
+
+Christos Zoulas .
+
+Luke Mewburn
 wrote this manual and implemented
-.Dv CC_REDISPLAY ,
-.Dv CC_REFRESH_BEEP ,
-.Dv EL_EDITMODE ,
+CC_REDISPLAY ,
+CC_REFRESH_BEEP ,
+EL_EDITMODE ,
 and
-.Dv EL_RPROMPT .
-.An Jaromir Dolecek
+EL_RPROMPT .
+
+Jaromir Dolecek
 implemented the readline emulation.
-.An Johny Mattsson
+
+Johny Mattsson
 implemented wide-character support.
-.Sh BUGS
+.SH BUGS
 At this time, it is the responsibility of the caller to
 check the result of the
-.Dv EL_EDITMODE
+EL_EDITMODE
 operation of
-.Fn el_get
+\fBel_get\fP()
 (after an
-.Fn el_source
+\fBel_source\fP()
 or
-.Fn el_parse )
+\fBel_parse\fP() )
 to determine if
-.Nm
+\fBeditline\fP
 should be used for further input.
 I.e.,
-.Dv EL_EDITMODE
+EL_EDITMODE
 is purely an indication of the result of the most recent
-.Xr editrc 5
-.Ic edit
+\fBeditrc\fP(5)
+\fBedit\fP
 command.

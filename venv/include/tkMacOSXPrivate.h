@@ -3,9 +3,9 @@
  *
  *	Macros and declarations that are purely internal & private to TkAqua.
  *
- * Copyright © 2005-2009 Daniel A. Steffen <das@users.sourceforge.net>
- * Copyright © 2008-2009 Apple Inc.
- * Copyright © 2020 Marc Culler
+ * Copyright (c) 2005-2009 Daniel A. Steffen <das@users.sourceforge.net>
+ * Copyright (c) 2008-2009 Apple Inc.
+ * Copyright (c) 2020 Marc Culler
  *
  * See the file "license.terms" for information on usage and redistribution
  * of this file, and for a DISCLAIMER OF ALL WARRANTIES.
@@ -217,8 +217,18 @@ typedef struct TkMacOSXDrawingContext {
 MODULE_SCOPE HIShapeRef	TkMacOSXGetNativeRegion(TkRegion r);
 MODULE_SCOPE void	TkMacOSXSetWithNativeRegion(TkRegion r,
 			    HIShapeRef rgn);
+MODULE_SCOPE HIShapeRef	TkMacOSXHIShapeCreateEmpty(void);
+MODULE_SCOPE HIMutableShapeRef TkMacOSXHIShapeCreateMutableWithRect(
+			    const CGRect *inRect);
+MODULE_SCOPE OSStatus	TkMacOSXHIShapeSetWithShape(
+			    HIMutableShapeRef inDestShape,
+			    HIShapeRef inSrcShape);
 MODULE_SCOPE OSStatus	TkMacOSHIShapeDifferenceWithRect(
 			    HIMutableShapeRef inShape, const CGRect *inRect);
+MODULE_SCOPE OSStatus	TkMacOSHIShapeUnionWithRect(HIMutableShapeRef inShape,
+			    const CGRect *inRect);
+MODULE_SCOPE OSStatus	TkMacOSHIShapeUnion(HIShapeRef inShape1,
+			    HIShapeRef inShape2, HIMutableShapeRef outResult);
 MODULE_SCOPE int	TkMacOSXCountRectsInRegion(HIShapeRef shape);
 MODULE_SCOPE void       TkMacOSXPrintRectsInRegion(HIShapeRef shape);
 /*

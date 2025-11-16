@@ -2,22 +2,27 @@
 build_time_vars = {'ABIFLAGS': '',
  'AC_APPLE_UNIVERSAL_BUILD': 0,
  'AIX_GENUINE_CPLUSPLUS': 0,
+ 'ALT_SOABI': 0,
  'ANDROID_API_LEVEL': 0,
  'AR': 'x86_64-apple-darwin13.4.0-ar',
  'ARFLAGS': 'rcs',
- 'BASECFLAGS': '-fno-strict-aliasing -Wsign-compare -Wunreachable-code',
+ 'BASECFLAGS': '-Wno-unused-result -Wsign-compare -Wunreachable-code',
  'BASECPPFLAGS': '-IObjects -IInclude -IPython',
  'BASEMODLIBS': '',
  'BINDIR': '/Users/ss/Desktop/mlproject_11/venv/bin',
  'BINLIBDEST': '/Users/ss/Desktop/mlproject_11/venv/lib/python3.8',
  'BLDLIBRARY': 'libpython3.8.a',
  'BLDSHARED': 'x86_64-apple-darwin13.4.0-clang -bundle -undefined '
-              'dynamic_lookup -Wl,-pie -Wl,-headerpad_max_install_names '
-              '-Wl,-dead_strip_dylibs '
+              'dynamic_lookup '
+              ''
+              '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+              '-Wl,-pie '
               '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
               '-L/Users/ss/Desktop/mlproject_11/venv/lib '
-              '-flto -Wl,-export_dynamic -Wl,-pie '
+              ''
+              ''
               '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+              '-Wl,-pie '
               '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
               '-L/Users/ss/Desktop/mlproject_11/venv/lib',
  'BUILDEXE': '.exe',
@@ -26,31 +31,51 @@ build_time_vars = {'ABIFLAGS': '',
  'BYTESTR_DEPS': '\\',
  'CC': 'x86_64-apple-darwin13.4.0-clang',
  'CCSHARED': '',
- 'CFLAGS': '-fno-strict-aliasing -Wsign-compare -Wunreachable-code -DNDEBUG '
-           '-fwrapv -O3 -Wall -Wstrict-prototypes -march=core2 -mtune=haswell '
-           '-mssse3 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O3 '
-           '-pipe  '
-           '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-           '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-           '-flto -Wl,-export_dynamic -march=core2 -mtune=haswell '
-           '-mssse3 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O3 ',
+ 'CFLAGS': '-Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG '
+           '-fwrapv -O2 -Wall '
+           ''
+           '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
+           '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+           '/Users/ss/Desktop/mlproject_11/venv/include '
+           ' '
+           ' '
+           ' '
+           ''
+           '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
+           '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+           '/Users/ss/Desktop/mlproject_11/venv/include '
+           ' '
+           ' '
+           '',
  'CFLAGSFORSHARED': '',
  'CFLAGS_ALIASING': '-fno-strict-aliasing',
  'CONFIGFILES': 'configure configure.ac acconfig.h pyconfig.h.in '
                 'Makefile.pre.in',
- 'CONFIGURE_CFLAGS': '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize '
-                     '-fPIC -fPIE -fstack-protector-strong -O3 -pipe  '
-                     '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-                     '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-                     '-flto -Wl,-export_dynamic',
- 'CONFIGURE_CFLAGS_NODIST': '-std=c99 -Werror=implicit-function-declaration',
- 'CONFIGURE_CPPFLAGS': '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
+ 'CONFIGURE_CFLAGS': ''
+                     ''
+                     '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize '
+                     '-fPIC -fstack-protector-strong -O2 -pipe -fPIE -isystem '
+                     '/Users/ss/Desktop/mlproject_11/venv/include '
+                     ' '
+                     ' '
+                     '',
+ 'CONFIGURE_CFLAGS_NODIST': ' -Wl,-export_dynamic -g -std=c99 -Wextra '
+                            '-Wno-unused-result -Wno-unused-parameter '
+                            '-Wno-missing-field-initializers '
+                            '-Werror=implicit-function-declaration',
+ 'CONFIGURE_CPPFLAGS': ''
+                       ''
+                       '-D_FORTIFY_SOURCE=2 -isystem '
+                       '/Users/ss/Desktop/mlproject_11/venv/include '
+                       '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
                        '-I/Users/ss/Desktop/mlproject_11/venv/include',
- 'CONFIGURE_LDFLAGS': '-Wl,-pie -Wl,-headerpad_max_install_names '
-                      '-Wl,-dead_strip_dylibs '
+ 'CONFIGURE_LDFLAGS': ''
+                      ''
+                      '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+                      '-Wl,-pie '
                       '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
-                      '-L/Users/ss/Desktop/mlproject_11/venv/lib '
-                      '-flto -Wl,-export_dynamic',
+                      '-L/Users/ss/Desktop/mlproject_11/venv/lib',
+ 'CONFIGURE_LDFLAGS_NODIST': ' -Wl,-export_dynamic -g',
  'CONFIG_ARGS': "'--prefix=/Users/ss/Desktop/mlproject_11/venv' "
                 "'--build=x86_64-apple-darwin13.4.0' "
                 "'--host=x86_64-apple-darwin13.4.0' '--enable-ipv6' "
@@ -58,33 +83,51 @@ build_time_vars = {'ABIFLAGS': '',
                 "'--with-system-ffi' '--enable-loadable-sqlite-extensions' "
                 "'--with-tcltk-includes=-I/Users/ss/Desktop/mlproject_11/venv/include' "
                 "'--with-tcltk-libs=-L/Users/ss/Desktop/mlproject_11/venv/lib "
-                "-ltcl8.6 -ltk8.6' '--enable-optimizations' '--with-lto' "
-                "'--disable-shared' 'build_alias=x86_64-apple-darwin13.4.0' "
-                "'host_alias=x86_64-apple-darwin13.4.0' "
-                "'CC=x86_64-apple-darwin13.4.0-clang' 'CFLAGS=-march=core2 "
-                '-mtune=haswell -mssse3 -ftree-vectorize -fPIC -fPIE '
-                '-fstack-protector-strong -O3 -pipe  '
-                '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-                '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-                "-flto' 'LDFLAGS=-Wl,-pie -Wl,-headerpad_max_install_names "
-                '-Wl,-dead_strip_dylibs '
+                "-ltcl8.6 -ltk8.6' '--with-lto' '--enable-optimizations' "
+                "'-oldincludedir=/Users/runner/miniforge3/conda-bld/python-split_1727717862766/_build_env/x86_64-apple-darwin13.4.0/sysroot/usr/include' "
+                "'--disable-shared' 'PROFILE_TASK=-m test --pgo' "
+                "'build_alias=x86_64-apple-darwin13.4.0' "
+                "'host_alias=x86_64-apple-darwin13.4.0' 'MACHDEP=darwin' "
+                "'CC=x86_64-apple-darwin13.4.0-clang' 'CFLAGS="
+                ''
+                '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
+                '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+                '/Users/ss/Desktop/mlproject_11/venv/include '
+                ' '
+                ' '
+                "' 'LDFLAGS="
+                ''
+                '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+                '-Wl,-pie '
                 '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
                 "-L/Users/ss/Desktop/mlproject_11/venv/lib' "
-                "'CPPFLAGS=-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 "
+                "'CPPFLAGS="
+                ''
+                '-D_FORTIFY_SOURCE=2 -isystem '
+                '/Users/ss/Desktop/mlproject_11/venv/include '
+                '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
                 "-I/Users/ss/Desktop/mlproject_11/venv/include' "
                 "'PKG_CONFIG_PATH=/Users/ss/Desktop/mlproject_11/venv/lib/pkgconfig'",
  'CONFINCLUDEDIR': '/Users/ss/Desktop/mlproject_11/venv/include',
  'CONFINCLUDEPY': '/Users/ss/Desktop/mlproject_11/venv/include/python3.8',
  'COREPYTHONPATH': '',
- 'COVERAGE_INFO': '${SRC_DIR}/build-static/coverage.info',
- 'COVERAGE_REPORT': '${SRC_DIR}/build-static/lcov-report',
+ 'COVERAGE_INFO': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/build-static/coverage.info',
+ 'COVERAGE_REPORT': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/build-static/lcov-report',
  'COVERAGE_REPORT_OPTIONS': '--no-branch-coverage --title "CPython lcov '
                             'report"',
  'CPPFLAGS': '-IObjects -IInclude -IPython -I. '
-             '-I${SRC_DIR}/Include '
-             '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
+             '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include '
+             ''
+             ''
+             '-D_FORTIFY_SOURCE=2 -isystem '
+             '/Users/ss/Desktop/mlproject_11/venv/include '
+             '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
              '-I/Users/ss/Desktop/mlproject_11/venv/include '
-             '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
+             ''
+             ''
+             '-D_FORTIFY_SOURCE=2 -isystem '
+             '/Users/ss/Desktop/mlproject_11/venv/include '
+             '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
              '-I/Users/ss/Desktop/mlproject_11/venv/include',
  'CXX': 'x86_64-apple-darwin13.4.0-clang++',
  'DESTDIRS': '/Users/ss/Desktop/mlproject_11/venv '
@@ -118,6 +161,7 @@ build_time_vars = {'ABIFLAGS': '',
  'EXTRATESTOPTS': '',
  'EXT_SUFFIX': '.cpython-38-darwin.so',
  'FILEMODE': 644,
+ 'FLOAT_WORDS_BIGENDIAN': 0,
  'FLOCK_NEEDS_LIBBSD': 0,
  'GETPGRP_HAVE_ARG': 0,
  'GETTIMEOFDAY_NO_TZ': 0,
@@ -151,14 +195,16 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_CHOWN': 1,
  'HAVE_CHROOT': 1,
  'HAVE_CLOCK': 1,
- 'HAVE_CLOCK_GETRES': 0,
- 'HAVE_CLOCK_GETTIME': 0,
- 'HAVE_CLOCK_SETTIME': 0,
+ 'HAVE_CLOCK_GETRES': 1,
+ 'HAVE_CLOCK_GETTIME': 1,
+ 'HAVE_CLOCK_SETTIME': 1,
  'HAVE_COMPUTED_GOTOS': 1,
  'HAVE_CONFSTR': 1,
  'HAVE_CONIO_H': 0,
  'HAVE_COPYSIGN': 1,
+ 'HAVE_COPY_FILE_RANGE': 0,
  'HAVE_CRYPT_H': 0,
+ 'HAVE_CRYPT_R': 0,
  'HAVE_CTERMID': 1,
  'HAVE_CTERMID_R': 1,
  'HAVE_CURSES_FILTER': 1,
@@ -196,6 +242,7 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_DLOPEN': 1,
  'HAVE_DUP2': 1,
  'HAVE_DUP3': 0,
+ 'HAVE_DYLD_SHARED_CACHE_CONTAINS_PATH': 0,
  'HAVE_DYNAMIC_LOADING': 1,
  'HAVE_ENDIAN_H': 0,
  'HAVE_EPOLL': 0,
@@ -204,16 +251,19 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_ERFC': 1,
  'HAVE_ERRNO_H': 1,
  'HAVE_EXECV': 1,
+ 'HAVE_EXPLICIT_BZERO': 0,
+ 'HAVE_EXPLICIT_MEMSET': 0,
  'HAVE_EXPM1': 1,
- 'HAVE_FACCESSAT': 0,
+ 'HAVE_FACCESSAT': 1,
  'HAVE_FCHDIR': 1,
  'HAVE_FCHMOD': 1,
- 'HAVE_FCHMODAT': 0,
+ 'HAVE_FCHMODAT': 1,
  'HAVE_FCHOWN': 1,
- 'HAVE_FCHOWNAT': 0,
+ 'HAVE_FCHOWNAT': 1,
  'HAVE_FCNTL_H': 1,
  'HAVE_FDATASYNC': 0,
- 'HAVE_FDOPENDIR': 0,
+ 'HAVE_FDOPENDIR': 1,
+ 'HAVE_FDWALK': 0,
  'HAVE_FEXECVE': 0,
  'HAVE_FINITE': 1,
  'HAVE_FLOCK': 1,
@@ -222,14 +272,14 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_FPATHCONF': 1,
  'HAVE_FSEEK64': 0,
  'HAVE_FSEEKO': 1,
- 'HAVE_FSTATAT': 0,
+ 'HAVE_FSTATAT': 1,
  'HAVE_FSTATVFS': 1,
  'HAVE_FSYNC': 1,
  'HAVE_FTELL64': 0,
  'HAVE_FTELLO': 1,
  'HAVE_FTIME': 1,
  'HAVE_FTRUNCATE': 1,
- 'HAVE_FUTIMENS': 0,
+ 'HAVE_FUTIMENS': 1,
  'HAVE_FUTIMES': 1,
  'HAVE_FUTIMESAT': 0,
  'HAVE_GAI_STRERROR': 1,
@@ -240,7 +290,9 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_GCC_UINT128_T': 1,
  'HAVE_GETADDRINFO': 1,
  'HAVE_GETC_UNLOCKED': 1,
- 'HAVE_GETENTROPY': 0,
+ 'HAVE_GETENTROPY': 1,
+ 'HAVE_GETGRGID_R': 1,
+ 'HAVE_GETGRNAM_R': 1,
  'HAVE_GETGROUPLIST': 1,
  'HAVE_GETGROUPS': 1,
  'HAVE_GETHOSTBYNAME': 1,
@@ -259,6 +311,8 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_GETPID': 1,
  'HAVE_GETPRIORITY': 1,
  'HAVE_GETPWENT': 1,
+ 'HAVE_GETPWNAM_R': 1,
+ 'HAVE_GETPWUID_R': 1,
  'HAVE_GETRANDOM': 0,
  'HAVE_GETRANDOM_SYSCALL': 0,
  'HAVE_GETRESGID': 0,
@@ -299,12 +353,14 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_LIBSENDFILE': 0,
  'HAVE_LIBUTIL_H': 0,
  'HAVE_LINK': 1,
- 'HAVE_LINKAT': 0,
+ 'HAVE_LINKAT': 1,
  'HAVE_LINUX_CAN_BCM_H': 0,
  'HAVE_LINUX_CAN_H': 0,
  'HAVE_LINUX_CAN_RAW_FD_FRAMES': 0,
  'HAVE_LINUX_CAN_RAW_H': 0,
+ 'HAVE_LINUX_MEMFD_H': 0,
  'HAVE_LINUX_NETLINK_H': 0,
+ 'HAVE_LINUX_QRTR_H': 0,
  'HAVE_LINUX_RANDOM_H': 0,
  'HAVE_LINUX_TIPC_H': 0,
  'HAVE_LINUX_VM_SOCKETS_H': 0,
@@ -314,11 +370,13 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_LONG_DOUBLE': 1,
  'HAVE_LSTAT': 1,
  'HAVE_LUTIMES': 1,
+ 'HAVE_MADVISE': 1,
  'HAVE_MAKEDEV': 1,
  'HAVE_MBRTOWC': 1,
+ 'HAVE_MEMFD_CREATE': 0,
  'HAVE_MEMORY_H': 1,
  'HAVE_MEMRCHR': 0,
- 'HAVE_MKDIRAT': 0,
+ 'HAVE_MKDIRAT': 1,
  'HAVE_MKFIFO': 1,
  'HAVE_MKFIFOAT': 0,
  'HAVE_MKNOD': 1,
@@ -331,7 +389,7 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_NETPACKET_PACKET_H': 0,
  'HAVE_NET_IF_H': 1,
  'HAVE_NICE': 1,
- 'HAVE_OPENAT': 0,
+ 'HAVE_OPENAT': 1,
  'HAVE_OPENPTY': 1,
  'HAVE_PATHCONF': 1,
  'HAVE_PAUSE': 1,
@@ -342,12 +400,14 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_POSIX_FADVISE': 0,
  'HAVE_POSIX_FALLOCATE': 0,
  'HAVE_POSIX_SPAWN': 1,
+ 'HAVE_POSIX_SPAWNP': 1,
  'HAVE_PREAD': 1,
  'HAVE_PREADV': 0,
  'HAVE_PREADV2': 0,
  'HAVE_PRLIMIT': 0,
  'HAVE_PROCESS_H': 0,
  'HAVE_PROTOTYPES': 1,
+ 'HAVE_PTHREAD_CONDATTR_SETCLOCK': 0,
  'HAVE_PTHREAD_DESTRUCTOR': 0,
  'HAVE_PTHREAD_GETCPUCLOCKID': 0,
  'HAVE_PTHREAD_H': 1,
@@ -360,10 +420,10 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_PWRITEV': 0,
  'HAVE_PWRITEV2': 0,
  'HAVE_READLINK': 1,
- 'HAVE_READLINKAT': 0,
+ 'HAVE_READLINKAT': 1,
  'HAVE_READV': 1,
  'HAVE_REALPATH': 1,
- 'HAVE_RENAMEAT': 0,
+ 'HAVE_RENAMEAT': 1,
  'HAVE_RL_APPEND_HISTORY': 1,
  'HAVE_RL_CATCH_SIGNAL': 1,
  'HAVE_RL_COMPLETION_APPEND_CHARACTER': 1,
@@ -373,6 +433,7 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_RL_PRE_INPUT_HOOK': 1,
  'HAVE_RL_RESIZE_TERMINAL': 1,
  'HAVE_ROUND': 1,
+ 'HAVE_RTPSPAWN': 0,
  'HAVE_SCHED_GET_PRIORITY_MAX': 1,
  'HAVE_SCHED_H': 1,
  'HAVE_SCHED_RR_GET_INTERVAL': 0,
@@ -402,8 +463,11 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_SETUID': 1,
  'HAVE_SETVBUF': 1,
  'HAVE_SHADOW_H': 0,
+ 'HAVE_SHM_OPEN': 1,
+ 'HAVE_SHM_UNLINK': 1,
  'HAVE_SIGACTION': 1,
  'HAVE_SIGALTSTACK': 1,
+ 'HAVE_SIGFILLSET': 1,
  'HAVE_SIGINFO_T_SI_BAND': 1,
  'HAVE_SIGINTERRUPT': 1,
  'HAVE_SIGNAL_H': 1,
@@ -425,13 +489,14 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_STDARG_PROTOTYPES': 1,
  'HAVE_STDINT_H': 1,
  'HAVE_STDLIB_H': 1,
- 'HAVE_STD_ATOMIC': 0,
+ 'HAVE_STD_ATOMIC': 1,
  'HAVE_STRDUP': 1,
  'HAVE_STRFTIME': 1,
  'HAVE_STRINGS_H': 1,
  'HAVE_STRING_H': 1,
  'HAVE_STRLCPY': 1,
  'HAVE_STROPTS_H': 0,
+ 'HAVE_STRSIGNAL': 1,
  'HAVE_STRUCT_PASSWD_PW_GECOS': 1,
  'HAVE_STRUCT_PASSWD_PW_PASSWD': 1,
  'HAVE_STRUCT_STAT_ST_BIRTHTIME': 1,
@@ -442,7 +507,7 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_STRUCT_STAT_ST_RDEV': 1,
  'HAVE_STRUCT_TM_TM_ZONE': 1,
  'HAVE_SYMLINK': 1,
- 'HAVE_SYMLINKAT': 0,
+ 'HAVE_SYMLINKAT': 1,
  'HAVE_SYNC': 1,
  'HAVE_SYSCONF': 1,
  'HAVE_SYSEXITS_H': 1,
@@ -458,7 +523,9 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_SYS_KERN_CONTROL_H': 1,
  'HAVE_SYS_LOADAVG_H': 0,
  'HAVE_SYS_LOCK_H': 1,
+ 'HAVE_SYS_MEMFD_H': 0,
  'HAVE_SYS_MKDEV_H': 0,
+ 'HAVE_SYS_MMAN_H': 1,
  'HAVE_SYS_MODEM_H': 0,
  'HAVE_SYS_NDIR_H': 0,
  'HAVE_SYS_PARAM_H': 1,
@@ -499,14 +566,15 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_UCS4_TCL': 0,
  'HAVE_UNAME': 1,
  'HAVE_UNISTD_H': 1,
- 'HAVE_UNLINKAT': 0,
+ 'HAVE_UNLINKAT': 1,
  'HAVE_UNSETENV': 1,
  'HAVE_USABLE_WCHAR_T': 0,
  'HAVE_UTIL_H': 1,
- 'HAVE_UTIMENSAT': 0,
+ 'HAVE_UTIMENSAT': 1,
  'HAVE_UTIMES': 1,
  'HAVE_UTIME_H': 1,
  'HAVE_UUID_CREATE': 0,
+ 'HAVE_UUID_ENC_BE': 0,
  'HAVE_UUID_GENERATE_TIME_SAFE': 0,
  'HAVE_UUID_H': 0,
  'HAVE_UUID_UUID_H': 1,
@@ -535,29 +603,33 @@ build_time_vars = {'ABIFLAGS': '',
  'INSTALL_DATA': '/usr/bin/install -c -m 644',
  'INSTALL_PROGRAM': '/usr/bin/install -c',
  'INSTALL_SCRIPT': '/usr/bin/install -c',
- 'INSTALL_SHARED': '/usr/bin/install -c -m 555',
+ 'INSTALL_SHARED': '/usr/bin/install -c -m 755',
  'INSTSONAME': 'libpython3.8.a',
  'IO_H': 'Modules/_io/_iomodule.h',
  'IO_OBJS': '\\',
  'LDCXXSHARED': 'x86_64-apple-darwin13.4.0-clang++ -bundle -undefined '
                 'dynamic_lookup',
- 'LDFLAGS': '-Wl,-pie -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+ 'LDFLAGS': ''
+            ''
+            '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-pie '
             '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
             '-L/Users/ss/Desktop/mlproject_11/venv/lib '
-            '-flto -Wl,-export_dynamic -Wl,-pie '
-            '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+            ''
+            ''
+            '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-pie '
             '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
             '-L/Users/ss/Desktop/mlproject_11/venv/lib',
- 'LDLAST': '',
  'LDLIBRARY': 'libpython3.8.a',
  'LDLIBRARYDIR': '',
  'LDSHARED': 'x86_64-apple-darwin13.4.0-clang -bundle -undefined '
-             'dynamic_lookup -Wl,-pie -Wl,-headerpad_max_install_names '
-             '-Wl,-dead_strip_dylibs '
+             'dynamic_lookup '
+             ''
+             '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-pie '
              '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
              '-L/Users/ss/Desktop/mlproject_11/venv/lib '
-             '-flto -Wl,-export_dynamic -Wl,-pie '
-             '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+             ''
+             ''
+             '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-pie '
              '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
              '-L/Users/ss/Desktop/mlproject_11/venv/lib',
  'LDVERSION': '3.8',
@@ -570,35 +642,37 @@ build_time_vars = {'ABIFLAGS': '',
  'LIBOBJS': '',
  'LIBPC': '/Users/ss/Desktop/mlproject_11/venv/lib/pkgconfig',
  'LIBPL': '/Users/ss/Desktop/mlproject_11/venv/lib/python3.8/config-3.8-darwin',
+ 'LIBPYTHON': '',
  'LIBRARY': 'libpython3.8.a',
  'LIBRARY_OBJS': '\\',
  'LIBRARY_OBJS_OMIT_FROZEN': '\\',
- 'LIBS': '-ldl  -framework CoreFoundation',
+ 'LIBS': '-ldl   -framework CoreFoundation',
  'LIBSUBDIRS': 'tkinter tkinter/test tkinter/test/test_tkinter \\',
  'LINKCC': 'x86_64-apple-darwin13.4.0-clang',
  'LINKFORSHARED': '-Wl,-stack_size,1000000  -framework CoreFoundation',
  'LIPO_32BIT_FLAGS': '',
+ 'LIPO_INTEL64_FLAGS': '',
  'LLVM_PROF_ERR': 'no',
  'LLVM_PROF_FILE': 'LLVM_PROFILE_FILE="code-%p.profclangr"',
- 'LLVM_PROF_MERGER': '/opt/conda/conda-bld/python_1524823838194/_build_env/bin/llvm-profdata '
+ 'LLVM_PROF_MERGER': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/_build_env/bin/llvm-profdata '
                      'merge -output=code.profclangd *.profclangr',
  'LN': 'ln',
  'LOCALMODLIBS': '',
- 'LOG1P_DROPS_ZERO_SIGN': 0,
  'MACHDEP': 'darwin',
  'MACHDEP_OBJS': '',
  'MACHDESTLIB': '/Users/ss/Desktop/mlproject_11/venv/lib/python3.8',
- 'MACOSX_DEPLOYMENT_TARGET': '10.9',
+ 'MACOSX_DEPLOYMENT_TARGET': '10.13',
  'MAINCC': 'x86_64-apple-darwin13.4.0-clang',
  'MAJOR_IN_MKDEV': 0,
  'MAJOR_IN_SYSMACROS': 0,
- 'MAKESETUP': '${SRC_DIR}/Modules/makesetup',
+ 'MAKESETUP': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Modules/makesetup',
  'MANDIR': '/Users/ss/Desktop/mlproject_11/venv/share/man',
- 'MKDIR_P': '${SRC_DIR}/install-sh -c -d',
+ 'MKDIR_P': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/install-sh '
+            '-c -d',
  'MODBUILT_NAMES': 'posix  errno  pwd  _sre  _codecs  _weakref  _functools  '
                    '_operator  _collections  _abc  itertools  atexit  _signal  '
-                   '_stat  time  _thread  _locale  _io  zipimport  '
-                   'faulthandler  _tracemalloc  _symtable  xxsubtype',
+                   '_stat  time  _thread  _locale  _io  faulthandler  '
+                   '_tracemalloc  _symtable  xxsubtype',
  'MODDISABLED_NAMES': '',
  'MODLIBS': '',
  'MODOBJS': 'Modules/posixmodule.o  Modules/errnomodule.o  '
@@ -610,10 +684,9 @@ build_time_vars = {'ABIFLAGS': '',
             'Modules/timemodule.o  Modules/_threadmodule.o  '
             'Modules/_localemodule.o  Modules/_iomodule.o Modules/iobase.o '
             'Modules/fileio.o Modules/bytesio.o Modules/bufferedio.o '
-            'Modules/textio.o Modules/stringio.o  Modules/zipimport.o  '
-            'Modules/faulthandler.o  Modules/_tracemalloc.o '
-            'Modules/hashtable.o  Modules/symtablemodule.o  '
-            'Modules/xxsubtype.o',
+            'Modules/textio.o Modules/stringio.o  Modules/faulthandler.o  '
+            'Modules/_tracemalloc.o Modules/hashtable.o  '
+            'Modules/symtablemodule.o  Modules/xxsubtype.o',
  'MODULE_OBJS': '\\',
  'MULTIARCH': 'darwin',
  'MULTIARCH_CPPFLAGS': '-DMULTIARCH=\\"darwin\\"',
@@ -623,7 +696,7 @@ build_time_vars = {'ABIFLAGS': '',
  'OPENSSL_INCLUDES': '-I/Users/ss/Desktop/mlproject_11/venv/include',
  'OPENSSL_LDFLAGS': '-L/Users/ss/Desktop/mlproject_11/venv/lib',
  'OPENSSL_LIBS': '-lssl -lcrypto',
- 'OPT': '-DNDEBUG -fwrapv -O3 -Wall -Wstrict-prototypes',
+ 'OPT': '-DNDEBUG -fwrapv -O2 -Wall',
  'OTHER_LIBTOOL_OPT': '',
  'PACKAGE_BUGREPORT': 0,
  'PACKAGE_NAME': 0,
@@ -633,14 +706,11 @@ build_time_vars = {'ABIFLAGS': '',
  'PACKAGE_VERSION': 0,
  'PARSER_HEADERS': '\\',
  'PARSER_OBJS': '\\ Parser/myreadline.o Parser/parsetok.o Parser/tokenizer.o',
- 'PGEN': 'Parser/pgen',
- 'PGENOBJS': '\\ \\',
- 'PGOBJS': '\\',
  'PGO_PROF_GEN_FLAG': '-fprofile-instr-generate',
  'PGO_PROF_USE_FLAG': '-fprofile-instr-use=code.profclangd',
  'POBJS': '\\',
  'POSIX_SEMAPHORES_NOT_ENABLED': 0,
- 'PROFILE_TASK': '-m test.regrtest --pgo',
+ 'PROFILE_TASK': '-m test --pgo',
  'PTHREAD_KEY_T_IS_COMPATIBLE_WITH_INT': 0,
  'PTHREAD_SYSTEM_SCHED_SUPPORTED': 1,
  'PURIFY': '',
@@ -653,74 +723,194 @@ build_time_vars = {'ABIFLAGS': '',
  'PYTHONFRAMEWORKPREFIX': '',
  'PYTHONPATH': '',
  'PYTHON_FOR_BUILD': './python.exe -E',
- 'PYTHON_FOR_REGEN': 'python3',
+ 'PYTHON_FOR_REGEN': '',
  'PYTHON_HEADERS': '\\',
  'PYTHON_OBJS': '\\',
  'PY_BUILD_ENVIRON': '',
- 'PY_CFLAGS': '-fno-strict-aliasing -Wsign-compare -Wunreachable-code -DNDEBUG '
-              '-fwrapv -O3 -Wall -Wstrict-prototypes -march=core2 '
-              '-mtune=haswell -mssse3 -ftree-vectorize -fPIC -fPIE '
-              '-fstack-protector-strong -O3 -pipe  '
-              '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-              '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-              '-flto -flto -Wl,-export_dynamic -march=core2 -mtune=haswell '
-              '-mssse3 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong '
-              '-O3 -pipe  '
-              '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-              '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-              '-flto',
- 'PY_CFLAGS_NODIST': '-std=c99 -Werror=implicit-function-declaration '
-                     '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize '
-                     '-fPIC -fPIE -fstack-protector-strong -O3 -pipe  '
-                     '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-                     '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-                     '-flto -fprofile-instr-use=code.profclangd',
+ 'PY_BUILTIN_MODULE_CFLAGS': '-Wno-unused-result -Wsign-compare '
+                             '-Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall '
+                             ''
+                             ''
+                             '-march=core2 -mtune=haswell -mssse3 '
+                             '-ftree-vectorize -fPIC -fstack-protector-strong '
+                             '-O2 -pipe -fPIE -isystem '
+                             '/Users/ss/Desktop/mlproject_11/venv/include '
+                             ' '
+                             ' '
+                             ' '
+                             ''
+                             '-march=core2 -mtune=haswell -mssse3 '
+                             '-ftree-vectorize -fPIC -fstack-protector-strong '
+                             '-O2 -pipe -fPIE -isystem '
+                             '/Users/ss/Desktop/mlproject_11/venv/include '
+                             ' '
+                             ' '
+                             '  -Wl,-export_dynamic -g -std=c99 '
+                             '-Wextra -Wno-unused-result -Wno-unused-parameter '
+                             '-Wno-missing-field-initializers '
+                             '-Werror=implicit-function-declaration '
+                             '-fprofile-instr-use=code.profclangd '
+                             '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include/internal '
+                             '-IObjects -IInclude -IPython -I. '
+                             '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include '
+                             ''
+                             ''
+                             '-D_FORTIFY_SOURCE=2 -isystem '
+                             '/Users/ss/Desktop/mlproject_11/venv/include '
+                             '-mmacosx-version-min=10.13 '
+                             '-mmacosx-version-min=10.13 '
+                             '-I/Users/ss/Desktop/mlproject_11/venv/include '
+                             ''
+                             ''
+                             '-D_FORTIFY_SOURCE=2 -isystem '
+                             '/Users/ss/Desktop/mlproject_11/venv/include '
+                             '-mmacosx-version-min=10.13 '
+                             '-mmacosx-version-min=10.13 '
+                             '-I/Users/ss/Desktop/mlproject_11/venv/include '
+                             '-DPy_BUILD_CORE_BUILTIN',
+ 'PY_CFLAGS': '-Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG '
+              '-fwrapv -O2 -Wall '
+              ''
+              '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
+              '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+              '/Users/ss/Desktop/mlproject_11/venv/include '
+              ' '
+              ' '
+              ' '
+              ''
+              '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
+              '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+              '/Users/ss/Desktop/mlproject_11/venv/include '
+              ' '
+              ' '
+              '',
+ 'PY_CFLAGS_NODIST': ' -Wl,-export_dynamic -g -std=c99 -Wextra '
+                     '-Wno-unused-result -Wno-unused-parameter '
+                     '-Wno-missing-field-initializers '
+                     '-Werror=implicit-function-declaration '
+                     '-fprofile-instr-use=code.profclangd '
+                     '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include/internal',
  'PY_COERCE_C_LOCALE': 1,
- 'PY_CORE_CFLAGS': '-fno-strict-aliasing -Wsign-compare -Wunreachable-code '
-                   '-DNDEBUG -fwrapv -O3 -Wall -Wstrict-prototypes '
+ 'PY_CORE_CFLAGS': '-Wno-unused-result -Wsign-compare -Wunreachable-code '
+                   '-DNDEBUG -fwrapv -O2 -Wall '
+                   ''
                    '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
-                   '-fPIE -fstack-protector-strong -O3 -pipe  '
-                   '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-                   '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-                   '-flto -flto -Wl,-export_dynamic -march=core2 '
-                   '-mtune=haswell -mssse3 -ftree-vectorize -fPIC -fPIE '
-                   '-fstack-protector-strong -O3 -pipe  '
-                   '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-                   '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-                   '-flto -std=c99 -Werror=implicit-function-declaration '
+                   '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+                   '/Users/ss/Desktop/mlproject_11/venv/include '
+                   ' '
+                   ' '
+                   ' '
+                   ''
                    '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC '
-                   '-fPIE -fstack-protector-strong -O3 -pipe  '
-                   '-fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} '
-                   '-fdebug-prefix-map=/Users/ss/Desktop/mlproject_11/venv=/usr/local/src/conda-prefix '
-                   '-flto -fprofile-instr-use=code.profclangd -IObjects '
-                   '-IInclude -IPython -I. '
-                   '-I${SRC_DIR}/Include '
-                   '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
+                   '-fstack-protector-strong -O2 -pipe -fPIE -isystem '
+                   '/Users/ss/Desktop/mlproject_11/venv/include '
+                   ' '
+                   ' '
+                   '  -Wl,-export_dynamic -g -std=c99 -Wextra '
+                   '-Wno-unused-result -Wno-unused-parameter '
+                   '-Wno-missing-field-initializers '
+                   '-Werror=implicit-function-declaration '
+                   '-fprofile-instr-use=code.profclangd '
+                   '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include/internal '
+                   '-IObjects -IInclude -IPython -I. '
+                   '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include '
+                   ''
+                   ''
+                   '-D_FORTIFY_SOURCE=2 -isystem '
+                   '/Users/ss/Desktop/mlproject_11/venv/include '
+                   '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
                    '-I/Users/ss/Desktop/mlproject_11/venv/include '
-                   '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
-                   '-I/Users/ss/Desktop/mlproject_11/venv/include  '
+                   ''
+                   ''
+                   '-D_FORTIFY_SOURCE=2 -isystem '
+                   '/Users/ss/Desktop/mlproject_11/venv/include '
+                   '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
+                   '-I/Users/ss/Desktop/mlproject_11/venv/include '
                    '-DPy_BUILD_CORE',
+ 'PY_CORE_LDFLAGS': ''
+                    ''
+                    '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+                    '-Wl,-pie '
+                    '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
+                    '-L/Users/ss/Desktop/mlproject_11/venv/lib '
+                    ''
+                    ''
+                    '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+                    '-Wl,-pie '
+                    '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
+                    '-L/Users/ss/Desktop/mlproject_11/venv/lib '
+                    ' -Wl,-export_dynamic -g',
  'PY_CPPFLAGS': '-IObjects -IInclude -IPython -I. '
-                '-I${SRC_DIR}/Include '
-                '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
+                '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include '
+                ''
+                ''
+                '-D_FORTIFY_SOURCE=2 -isystem '
+                '/Users/ss/Desktop/mlproject_11/venv/include '
+                '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
                 '-I/Users/ss/Desktop/mlproject_11/venv/include '
-                '-D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 '
+                ''
+                ''
+                '-D_FORTIFY_SOURCE=2 -isystem '
+                '/Users/ss/Desktop/mlproject_11/venv/include '
+                '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
                 '-I/Users/ss/Desktop/mlproject_11/venv/include',
  'PY_FORMAT_SIZE_T': '"z"',
- 'PY_LDFLAGS': '-Wl,-pie -Wl,-headerpad_max_install_names '
-               '-Wl,-dead_strip_dylibs '
+ 'PY_LDFLAGS': ''
+               ''
+               '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+               '-Wl,-pie '
                '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
                '-L/Users/ss/Desktop/mlproject_11/venv/lib '
-               '-flto -Wl,-export_dynamic -Wl,-pie '
+               ''
+               ''
                '-Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs '
+               '-Wl,-pie '
                '-Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib '
                '-L/Users/ss/Desktop/mlproject_11/venv/lib',
+ 'PY_LDFLAGS_NODIST': ' -Wl,-export_dynamic -g',
  'PY_SSL_DEFAULT_CIPHERS': 1,
  'PY_SSL_DEFAULT_CIPHER_STRING': 0,
- 'PY_WARN_ON_C_LOCALE': 1,
+ 'PY_STDMODULE_CFLAGS': '-Wno-unused-result -Wsign-compare -Wunreachable-code '
+                        '-DNDEBUG -fwrapv -O2 -Wall '
+                        ''
+                        '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize '
+                        '-fPIC -fstack-protector-strong -O2 -pipe -fPIE '
+                        '-isystem '
+                        '/Users/ss/Desktop/mlproject_11/venv/include '
+                        ' '
+                        ' '
+                        ' '
+                        ''
+                        '-march=core2 -mtune=haswell -mssse3 -ftree-vectorize '
+                        '-fPIC -fstack-protector-strong -O2 -pipe -fPIE '
+                        '-isystem '
+                        '/Users/ss/Desktop/mlproject_11/venv/include '
+                        ' '
+                        ' '
+                        '  -Wl,-export_dynamic -g -std=c99 -Wextra '
+                        '-Wno-unused-result -Wno-unused-parameter '
+                        '-Wno-missing-field-initializers '
+                        '-Werror=implicit-function-declaration '
+                        '-fprofile-instr-use=code.profclangd '
+                        '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include/internal '
+                        '-IObjects -IInclude -IPython -I. '
+                        '-I/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Include '
+                        ''
+                        ''
+                        '-D_FORTIFY_SOURCE=2 -isystem '
+                        '/Users/ss/Desktop/mlproject_11/venv/include '
+                        '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
+                        '-I/Users/ss/Desktop/mlproject_11/venv/include '
+                        ''
+                        ''
+                        '-D_FORTIFY_SOURCE=2 -isystem '
+                        '/Users/ss/Desktop/mlproject_11/venv/include '
+                        '-mmacosx-version-min=10.13 -mmacosx-version-min=10.13 '
+                        '-I/Users/ss/Desktop/mlproject_11/venv/include',
  'Py_DEBUG': 0,
  'Py_ENABLE_SHARED': 0,
  'Py_HASH_ALGORITHM': 0,
+ 'Py_TRACE_REFS': 0,
  'QUICKTESTOPTS': '-x test_subprocess test_io test_lib2to3 \\',
  'READELF': ':',
  'RESSRCDIR': 'Mac/Resources/framework',
@@ -730,8 +920,9 @@ build_time_vars = {'ABIFLAGS': '',
  'SETPGRP_HAVE_ARG': 0,
  'SGI_ABI': '',
  'SHELL': '/bin/sh',
- 'SHLIBS': '-ldl  -framework CoreFoundation',
+ 'SHLIBS': '-ldl   -framework CoreFoundation',
  'SHLIB_SUFFIX': '.so',
+ 'SHM_NEEDS_LIBRT': 0,
  'SIGNED_RIGHT_SHIFT_ZERO_FILLS': 0,
  'SITEPATH': '',
  'SIZEOF_DOUBLE': 8,
@@ -753,8 +944,8 @@ build_time_vars = {'ABIFLAGS': '',
  'SIZEOF_WCHAR_T': 4,
  'SIZEOF__BOOL': 1,
  'SOABI': 'cpython-38-darwin',
- 'SRCDIRS': 'Parser Objects Python Modules Programs',
- 'SRC_GDB_HOOKS': '${SRC_DIR}/Tools/gdb/libpython.py',
+ 'SRCDIRS': 'Parser Objects Python Modules Modules/_io Programs',
+ 'SRC_GDB_HOOKS': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Tools/gdb/libpython.py',
  'STDC_HEADERS': 1,
  'STRICT_SYSV_CURSES': "/* Don't use ncurses extensions */",
  'STRIPFLAG': '-s',
@@ -762,7 +953,6 @@ build_time_vars = {'ABIFLAGS': '',
  'SUBDIRSTOO': 'Include Lib Misc',
  'SYSLIBS': '',
  'SYS_SELECT_WITH_SYS_TIME': 1,
- 'TANH_PRESERVES_ZERO_SIGN': 1,
  'TCLTK_INCLUDES': '-I/Users/ss/Desktop/mlproject_11/venv/include',
  'TCLTK_LIBS': '-L/Users/ss/Desktop/mlproject_11/venv/lib '
                '-ltcl8.6 -ltk8.6',
@@ -771,19 +961,19 @@ build_time_vars = {'ABIFLAGS': '',
  'TESTPYTHON': './python.exe',
  'TESTPYTHONOPTS': '',
  'TESTRUNNER': './python.exe '
-               '${SRC_DIR}/Tools/scripts/run_tests.py',
+               '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Tools/scripts/run_tests.py',
  'TESTTIMEOUT': 1200,
  'TIMEMODULE_LIB': 0,
  'TIME_WITH_SYS_TIME': 1,
  'TM_IN_SYS_TIME': 0,
  'UNICODE_DEPS': '\\',
  'UNIVERSALSDK': '',
- 'UPDATE_FILE': 'python3 '
-                '${SRC_DIR}/Tools/scripts/update_file.py',
+ 'UPDATE_FILE': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/Tools/scripts/update_file.py',
  'USE_COMPUTED_GOTOS': 1,
  'VERSION': '3.8',
- 'VPATH': '${SRC_DIR}',
- 'WINDOW_HAS_FLAGS': 1,
+ 'VPATH': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work',
+ 'WINDOW_HAS_FLAGS': 0,
+ 'WITH_DECIMAL_CONTEXTVAR': 1,
  'WITH_DOC_STRINGS': 1,
  'WITH_DTRACE': 0,
  'WITH_DYLD': 1,
@@ -793,9 +983,9 @@ build_time_vars = {'ABIFLAGS': '',
  'WITH_VALGRIND': 0,
  'X87_DOUBLE_ROUNDING': 0,
  'XMLLIBSUBDIRS': 'xml xml/dom xml/etree xml/parsers xml/sax',
- 'abs_builddir': '${SRC_DIR}/build-static',
- 'abs_srcdir': '${SRC_DIR}',
+ 'abs_builddir': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work/build-static',
+ 'abs_srcdir': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work',
  'datarootdir': '/Users/ss/Desktop/mlproject_11/venv/share',
  'exec_prefix': '/Users/ss/Desktop/mlproject_11/venv',
  'prefix': '/Users/ss/Desktop/mlproject_11/venv',
- 'srcdir': '${SRC_DIR}'}
+ 'srcdir': '/Users/runner/miniforge3/conda-bld/python-split_1727717862766/work'}

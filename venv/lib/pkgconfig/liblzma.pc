@@ -2,15 +2,15 @@
 # Author: Lasse Collin
 
 prefix=/Users/ss/Desktop/mlproject_11/venv
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+exec_prefix=/Users/ss/Desktop/mlproject_11/venv
+libdir=/Users/ss/Desktop/mlproject_11/venv/lib
+includedir=/Users/ss/Desktop/mlproject_11/venv/include
 
 Name: liblzma
 Description: General purpose data compression library
 URL: https://tukaani.org/xz/
-Version: 5.6.4
+Version: 5.8.1
 Cflags: -I${includedir}
 Cflags.private: -DLZMA_API_STATIC
 Libs: -L${libdir} -llzma
-Libs.private:  
+Libs.private: -pthread -lpthread 

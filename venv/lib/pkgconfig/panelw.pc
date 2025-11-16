@@ -14,6 +14,6 @@ Description: ncurses 6.5 add-on library
 Version: ${version}
 URL: https://invisible-island.net/ncurses
 Requires.private: ncursesw
-Libs:  -L/Users/ss/Desktop/mlproject_11/venv/lib -Wl,-pie -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib -Wl,-search_paths_first -lpanelw
+Libs:  -L/Users/ss/Desktop/mlproject_11/venv/lib -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/ss/Desktop/mlproject_11/venv/lib -Wl,-search_paths_first -lpanelw
 Libs.private:  
 Cflags:  -D_DARWIN_C_SOURCE -DNCURSES_WIDECHAR -I${includedir} -I/Users/ss/Desktop/mlproject_11/venv/include

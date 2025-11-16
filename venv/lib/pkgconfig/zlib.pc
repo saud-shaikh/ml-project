@@ -1,12 +1,12 @@
 prefix=/Users/ss/Desktop/mlproject_11/venv
-exec_prefix=/Users/ss/Desktop/mlproject_11/venv
-libdir=/Users/ss/Desktop/mlproject_11/venv/lib
-sharedlibdir=/Users/ss/Desktop/mlproject_11/venv/lib
-includedir=/Users/ss/Desktop/mlproject_11/venv/include
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+sharedlibdir=${libdir}
+includedir=${prefix}/include
 
 Name: zlib
 Description: zlib compression library
-Version: 1.2.13
+Version: 1.3.1
 
 Requires:
 Libs: -L${libdir} -L${sharedlibdir} -lz

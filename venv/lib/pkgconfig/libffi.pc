@@ -1,11 +1,11 @@
 prefix=/Users/ss/Desktop/mlproject_11/venv
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
-toolexeclibdir=${exec_prefix}/lib
-includedir=${prefix}/include
+toolexeclibdir=${libdir}
+includedir=/Users/ss/Desktop/mlproject_11/venv/include
 
 Name: libffi
 Description: Library supporting Foreign Function Interfaces
-Version: 3.2.1
+Version: 3.5.2
 Libs: -L${toolexeclibdir} -lffi
 Cflags: -I${includedir}

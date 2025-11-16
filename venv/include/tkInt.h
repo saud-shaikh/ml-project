@@ -6,7 +6,7 @@
  *
  * Copyright (c) 1990-1994 The Regents of the University of California.
  * Copyright (c) 1994-1997 Sun Microsystems, Inc.
- * Copyright (c) 1998 Scriptics Corporation.
+ * Copyright (c) 1998 by Scriptics Corporation.
  *
  * See the file "license.terms" for information on usage and redistribution of
  * this file, and for a DISCLAIMER OF ALL WARRANTIES.
@@ -693,8 +693,6 @@ typedef struct TkMainInfo {
 				/* Saved Tcl [update] command, used to restore
 				 * Tcl's version of [update] after Tk is shut
 				 * down */
-    unsigned int ttkNbTabsStickBit;
-				/* Information used by ttk::notebook. */
 } TkMainInfo;
 
 /*
@@ -707,7 +705,7 @@ typedef struct {
     const void *source;		/* Bits for bitmap. */
     int width, height;		/* Dimensions of bitmap. */
     int native;			/* 0 means generic (X style) bitmap, 1 means
-				 * native style bitmap. */
+    				 * native style bitmap. */
 } TkPredefBitmap;
 
 /*
@@ -1094,11 +1092,10 @@ extern "C" {
 #endif
 
 /*
- * Themed widget set init function, and handler called when Tk is destroyed.
+ * Themed widget set init function:
  */
 
 MODULE_SCOPE int	Ttk_Init(Tcl_Interp *interp);
-MODULE_SCOPE void	Ttk_TkDestroyedHandler(Tcl_Interp *interp);
 
 /*
  * Internal functions shared among Tk modules but not exported to the outside
@@ -1315,8 +1312,6 @@ MODULE_SCOPE int	TkBackgroundEvalObjv(Tcl_Interp *interp,
 			    int objc, Tcl_Obj *const *objv, int flags);
 MODULE_SCOPE void	TkSendVirtualEvent(Tk_Window tgtWin,
 			    const char *eventName, Tcl_Obj *detail);
-MODULE_SCOPE void	TkDrawDottedRect(Display *disp, Drawable d, GC gc,
-			    int x, int y, int width, int height);
 MODULE_SCOPE Tcl_Command TkMakeEnsemble(Tcl_Interp *interp,
 			    const char *nsname, const char *name,
 			    ClientData clientData, const TkEnsemble *map);
@@ -1340,8 +1335,6 @@ MODULE_SCOPE Status TkParseColor (Display * display,
 #ifdef HAVE_XFT
 MODULE_SCOPE void	TkUnixSetXftClipRegion(TkRegion clipRegion);
 #endif
-
-MODULE_SCOPE void	TkpCopyRegion(TkRegion dst, TkRegion src);
 
 #if !defined(__cplusplus) && !defined(c_plusplus)
 # define c_class class

@@ -5,9 +5,9 @@
  *	information that may be configuration-dependent, such as
  *	#includes for system include files and a few other things.
  *
- * Copyright © 1994-1996 Sun Microsystems, Inc.
- * Copyright © 2001-2009 Apple Inc.
- * Copyright © 2005-2009 Daniel A. Steffen <das@users.sourceforge.net>
+ * Copyright (c) 1994-1996 Sun Microsystems, Inc.
+ * Copyright 2001-2009, Apple Inc.
+ * Copyright (c) 2005-2009 Daniel A. Steffen <das@users.sourceforge.net>
  *
  * See the file "license.terms" for information on usage and redistribution
  * of this file, and for a DISCLAIMER OF ALL WARRANTIES.
@@ -129,11 +129,11 @@
 #undef XGrabServer
 #define XGrabServer(display) (0)
 #undef XNoOp
-#define XNoOp(display) (LastKnownRequestProcessed(display)++,0)
+#define XNoOp(display) (display->request++,0)
 #undef XUngrabServer
 #define XUngrabServer(display) (0)
 #undef XSynchronize
-#define XSynchronize(display, onoff) (LastKnownRequestProcessed(display)++,NULL)
+#define XSynchronize(display, onoff) (display->request++,NULL)
 #undef XVisualIDFromVisual
 #define XVisualIDFromVisual(visual) (visual->visualid)
 
@@ -162,7 +162,7 @@
  */
 
 #define TkpPrintWindowId(buf,w) \
-	snprintf((buf), TCL_INTEGER_SPACE, "0x%lx", (unsigned long) (w))
+	sprintf((buf), "0x%lx", (unsigned long) (w))
 
 /*
  * Turn off Tk double-buffering as Aqua windows are already double-buffered.

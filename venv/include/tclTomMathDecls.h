@@ -67,12 +67,10 @@
 #define mp_div_2 TclBN_mp_div_2
 #define mp_div_2d TclBN_mp_div_2d
 #define mp_div_3 TclBN_mp_div_3
-#define s_mp_div_3 TclBN_mp_div_3
 #define mp_div_d TclBN_mp_div_d
 #define mp_exch TclBN_mp_exch
 #define mp_expt_d TclBN_mp_expt_d
 #define mp_expt_d_ex TclBN_mp_expt_d_ex
-#define mp_expt_n TclBN_mp_expt_d
 #define mp_expt_u32 TclBN_mp_expt_d
 #define mp_get_mag_ull TclBN_mp_get_mag_ull
 #define mp_grow TclBN_mp_grow
@@ -91,8 +89,6 @@
 #define mp_mul_d TclBN_mp_mul_d
 #define mp_neg TclBN_mp_neg
 #define mp_or TclBN_mp_or
-#define mp_pack TclBN_mp_pack
-#define mp_pack_count TclBN_mp_pack_count
 #define mp_radix_size TclBN_mp_radix_size
 #define mp_read_radix TclBN_mp_read_radix
 #define mp_rshd TclBN_mp_rshd
@@ -118,7 +114,6 @@
 #define mp_toradix_n TclBN_mp_toradix_n
 #define mp_to_radix TclBN_mp_to_radix
 #define mp_to_ubin TclBN_mp_to_ubin
-#define mp_unpack TclBN_mp_unpack
 #define mp_ubin_size TclBN_mp_unsigned_bin_size
 #define mp_unsigned_bin_size(a) ((int)TclBN_mp_unsigned_bin_size(a))
 #define mp_xor TclBN_mp_xor
@@ -209,7 +204,8 @@ EXTERN mp_err		TclBN_mp_div_3(const mp_int *a, mp_int *q,
 /* 18 */
 EXTERN void		TclBN_mp_exch(mp_int *a, mp_int *b);
 /* 19 */
-EXTERN mp_err		TclBN_mp_expt_d(const mp_int *a, int b, mp_int *c);
+EXTERN mp_err		TclBN_mp_expt_d(const mp_int *a, unsigned int b,
+				mp_int *c);
 /* 20 */
 EXTERN mp_err		TclBN_mp_grow(mp_int *a, int size);
 /* 21 */
@@ -333,16 +329,8 @@ EXTERN void		TclBN_mp_set_ull(mp_int *a, Tcl_WideUInt i);
 EXTERN Tcl_WideUInt	TclBN_mp_get_mag_ull(const mp_int *a);
 /* 70 */
 EXTERN void		TclBN_mp_set_ll(mp_int *a, Tcl_WideInt i);
-/* 71 */
-EXTERN mp_err		TclBN_mp_unpack(mp_int *rop, size_t count,
-				mp_order order, size_t size,
-				mp_endian endian, size_t nails,
-				const void *op);
-/* 72 */
-EXTERN mp_err		TclBN_mp_pack(void *rop, size_t maxcount,
-				size_t *written, mp_order order, size_t size,
-				mp_endian endian, size_t nails,
-				const mp_int *op);
+/* Slot 71 is reserved */
+/* Slot 72 is reserved */
 /* 73 */
 EXTERN mp_err		TclBN_mp_tc_and(const mp_int *a, const mp_int *b,
 				mp_int *c);
@@ -355,9 +343,7 @@ EXTERN mp_err		TclBN_mp_tc_xor(const mp_int *a, const mp_int *b,
 /* 76 */
 EXTERN mp_err		TclBN_mp_signed_rsh(const mp_int *a, int b,
 				mp_int *c);
-/* 77 */
-EXTERN size_t		TclBN_mp_pack_count(const mp_int *a, size_t nails,
-				size_t size);
+/* Slot 77 is reserved */
 /* 78 */
 EXTERN int		TclBN_mp_to_ubin(const mp_int *a, unsigned char *buf,
 				size_t maxlen, size_t *written);
@@ -391,7 +377,7 @@ typedef struct TclTomMathStubs {
     mp_err (*tclBN_mp_div_2d) (const mp_int *a, int b, mp_int *q, mp_int *r); /* 16 */
     mp_err (*tclBN_mp_div_3) (const mp_int *a, mp_int *q, mp_digit *r); /* 17 */
     void (*tclBN_mp_exch) (mp_int *a, mp_int *b); /* 18 */
-    mp_err (*tclBN_mp_expt_d) (const mp_int *a, int b, mp_int *c); /* 19 */
+    mp_err (*tclBN_mp_expt_d) (const mp_int *a, unsigned int b, mp_int *c); /* 19 */
     mp_err (*tclBN_mp_grow) (mp_int *a, int size); /* 20 */
     mp_err (*tclBN_mp_init) (mp_int *a); /* 21 */
     mp_err (*tclBN_mp_init_copy) (mp_int *a, const mp_int *b); /* 22 */
@@ -443,13 +429,13 @@ typedef struct TclTomMathStubs {
     void (*tclBN_mp_set_ull) (mp_int *a, Tcl_WideUInt i); /* 68 */
     Tcl_WideUInt (*tclBN_mp_get_mag_ull) (const mp_int *a); /* 69 */
     void (*tclBN_mp_set_ll) (mp_int *a, Tcl_WideInt i); /* 70 */
-    mp_err (*tclBN_mp_unpack) (mp_int *rop, size_t count, mp_order order, size_t size, mp_endian endian, size_t nails, const void *op); /* 71 */
-    mp_err (*tclBN_mp_pack) (void *rop, size_t maxcount, size_t *written, mp_order order, size_t size, mp_endian endian, size_t nails, const mp_int *op); /* 72 */
+    void (*reserved71)(void);
+    void (*reserved72)(void);
     mp_err (*tclBN_mp_tc_and) (const mp_int *a, const mp_int *b, mp_int *c); /* 73 */
     mp_err (*tclBN_mp_tc_or) (const mp_int *a, const mp_int *b, mp_int *c); /* 74 */
     mp_err (*tclBN_mp_tc_xor) (const mp_int *a, const mp_int *b, mp_int *c); /* 75 */
     mp_err (*tclBN_mp_signed_rsh) (const mp_int *a, int b, mp_int *c); /* 76 */
-    size_t (*tclBN_mp_pack_count) (const mp_int *a, size_t nails, size_t size); /* 77 */
+    void (*reserved77)(void);
     int (*tclBN_mp_to_ubin) (const mp_int *a, unsigned char *buf, size_t maxlen, size_t *written); /* 78 */
     mp_err (*tclBN_mp_div_ld) (const mp_int *a, Tcl_WideUInt b, mp_int *q, Tcl_WideUInt *r); /* 79 */
     int (*tclBN_mp_to_radix) (const mp_int *a, char *str, size_t maxlen, size_t *written, int radix); /* 80 */
@@ -609,10 +595,8 @@ extern const TclTomMathStubs *tclTomMathStubsPtr;
 	(tclTomMathStubsPtr->tclBN_mp_get_mag_ull) /* 69 */
 #define TclBN_mp_set_ll \
 	(tclTomMathStubsPtr->tclBN_mp_set_ll) /* 70 */
-#define TclBN_mp_unpack \
-	(tclTomMathStubsPtr->tclBN_mp_unpack) /* 71 */
-#define TclBN_mp_pack \
-	(tclTomMathStubsPtr->tclBN_mp_pack) /* 72 */
+/* Slot 71 is reserved */
+/* Slot 72 is reserved */
 #define TclBN_mp_tc_and \
 	(tclTomMathStubsPtr->tclBN_mp_tc_and) /* 73 */
 #define TclBN_mp_tc_or \
@@ -621,8 +605,7 @@ extern const TclTomMathStubs *tclTomMathStubsPtr;
 	(tclTomMathStubsPtr->tclBN_mp_tc_xor) /* 75 */
 #define TclBN_mp_signed_rsh \
 	(tclTomMathStubsPtr->tclBN_mp_signed_rsh) /* 76 */
-#define TclBN_mp_pack_count \
-	(tclTomMathStubsPtr->tclBN_mp_pack_count) /* 77 */
+/* Slot 77 is reserved */
 #define TclBN_mp_to_ubin \
 	(tclTomMathStubsPtr->tclBN_mp_to_ubin) /* 78 */
 #define TclBN_mp_div_ld \
